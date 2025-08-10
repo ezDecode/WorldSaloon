@@ -15,7 +15,9 @@ import 'dotenv/config';
 
 // Initialize Firebase Admin SDK
 if (!getApps().length) {
-  initializeApp();
+  initializeApp({
+    projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  });
 }
 
 const db = getFirestore();

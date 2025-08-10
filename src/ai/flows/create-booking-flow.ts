@@ -10,7 +10,7 @@
 import { ai } from '@/ai/genkit';
 import { z } from 'genkit';
 import { getFirestore } from 'firebase-admin/firestore';
-import { initializeApp, getApps } from 'firebase-admin/app';
+import { initializeApp, getApps, App } from 'firebase-admin/app';
 import { format, parseISO } from "date-fns";
 import 'dotenv/config';
 import { services } from '@/lib/data';
@@ -18,7 +18,9 @@ import { services } from '@/lib/data';
 
 // Initialize Firebase Admin SDK
 if (!getApps().length) {
-  initializeApp();
+  initializeApp({
+    projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  });
 }
 
 const db = getFirestore();
@@ -139,7 +141,10 @@ const createBookingFlow = ai.defineFlow(
       };
     } catch (error) {
       console.error('Error in createBookingFlow: ', error);
-      throw new Error('Failed to create booking.');
+      if (error instanceof Error) {
+        throw new Error(`Failed to create booking: ${error.message}`);
+      }
+      throw new Error('Failed to create booking due to an unknown error.');
     }
   }
 );
