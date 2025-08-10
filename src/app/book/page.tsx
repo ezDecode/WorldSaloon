@@ -1,4 +1,5 @@
 
+import { ClientToaster } from '@/components/client-toaster';
 import { BookingFlow } from '@/components/booking/booking-flow';
 
 export default function BookPage() {
@@ -11,6 +12,7 @@ export default function BookPage() {
           </p>
       </div>
       <BookingFlow />
+      <ClientToaster />
     </div>
   );
 }

@@ -1,6 +1,5 @@
 import type {Metadata} from 'next';
 import './globals.css';
-import { Toaster } from "@/components/ui/toaster";
 import { Manrope } from 'next/font/google';
 import { cn } from '@/lib/utils';
 
@@ -25,7 +24,6 @@ export default function RootLayout({
       <head />
       <body className="font-body antialiased">
         {children}
-        <Toaster />
       </body>
     </html>
   );
