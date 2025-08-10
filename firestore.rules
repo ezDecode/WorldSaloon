@@ -1,23 +1,21 @@
+
 rules_version = '2';
+
 service cloud.firestore {
   match /databases/{database}/documents {
-    // Deny all reads and writes by default
+    // Default deny all
     match /{document=**} {
       allow read, write: if false;
     }
 
-    // Allow anyone to read the list of testimonials
-    match /testimonials/{testimonialId} {
-      allow read: if true;
-    }
-
-    // Allow anyone to create a new testimonial
-    match /testimonials/{testimonialId} {
-        allow create: if true;
-    }
-    
     // Allow anyone to create a booking
     match /bookings/{bookingId} {
+      allow create: if true;
+    }
+
+    // Allow anyone to read and create testimonials
+    match /testimonials/{testimonialId} {
+      allow get, list: if true;
       allow create: if true;
     }
   }
