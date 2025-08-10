@@ -9,6 +9,18 @@ type Props = {
 };
 
 export function BookingComplete({ booking, onBookAnother }: Props) {
+    if (!booking.service) {
+        return (
+            <div className="text-center">
+                <p>An error occurred. Please book again.</p>
+                <Button onClick={onBookAnother} className="mt-4">
+                  Book Another Appointment
+                </Button>
+            </div>
+        );
+    }
+    const totalPayable = booking.service.price + booking.service.bookingFee;
+
   return (
     <div className="text-center flex flex-col items-center max-w-lg mx-auto">
       <CheckCircle2 className="w-16 h-16 text-green-500 mb-4" />
@@ -21,7 +33,7 @@ export function BookingComplete({ booking, onBookAnother }: Props) {
         <h3 className="font-bold text-lg">Booking Summary</h3>
         <p className="flex items-center"><Calendar className="w-4 h-4 mr-2 text-primary"/>{booking.date ? format(parseISO(booking.date), "EEEE, d MMMM yyyy") : ''} at {booking.time}</p>
         <p className="flex items-center"><Clock className="w-4 h-4 mr-2 text-primary"/>{booking.service.duration} minutes</p>
-        <p className="flex items-center"><IndianRupee className="w-4 h-4 mr-2 text-primary"/>{booking.service.price} (to be paid at the salon)</p>
+        <p className="flex items-center font-bold"><IndianRupee className="w-4 h-4 mr-2 text-primary"/>₹{totalPayable} (to be paid at the salon)</p>
       </div>
       
       <Button onClick={onBookAnother}>

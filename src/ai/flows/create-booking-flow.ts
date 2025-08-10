@@ -27,6 +27,7 @@ const ServiceSchema = z.object({
   name: z.string(),
   duration: z.number(),
   price: z.number(),
+  bookingFee: z.number(),
 });
 
 const CreateBookingInputSchema = z.object({
@@ -63,25 +64,68 @@ const createBookingFlow = ai.defineFlow(
         ...bookingData,
         createdAt: new Date().toISOString(),
       });
+      
+      const barberEmail = process.env.BARBER_EMAIL || 'barber@example.com';
+      const bookingDate = format(parseISO(bookingData.date), "EEEE, d MMMM yyyy");
+      const totalCost = bookingData.service.price + bookingData.service.bookingFee;
 
-      // Placeholder for sending email confirmation
-      const confirmationMessage = 
-`Hi ${bookingData.name}, your appointment at Sardar Appointment is confirmed!
-Service: ${bookingData.service.name}
-Date: ${format(parseISO(bookingData.date), "EEEE, d MMMM yyyy")}
-Time: ${bookingData.time}
-We look forward to seeing you!`;
+      // Email to Client
+      const clientEmailBody = `
+        Hi ${bookingData.name},
 
-      console.log("--- SIMULATING EMAIL ---");
+        Your appointment at Sardar Appointment is confirmed!
+        We look forward to seeing you.
+
+        Booking Details:
+        - Service: ${bookingData.service.name}
+        - Date: ${bookingDate}
+        - Time: ${bookingData.time}
+        - Notes: ${bookingData.notes || 'None'}
+
+        Payment Summary:
+        - Service Cost: ₹${bookingData.service.price}
+        - Booking Fee: ₹${bookingData.service.bookingFee}
+        - Total (to be paid at salon): ₹${totalCost}
+
+        Thank you for booking with us!
+        Sardar Appointment
+      `;
+
+      // Email to Barber
+      const barberEmailBody = `
+        New Booking Notification:
+
+        A new appointment has been scheduled.
+
+        Client Details:
+        - Name: ${bookingData.name}
+        - Email: ${bookingData.email}
+        - Notes: ${bookingData.notes || 'None'}
+
+        Appointment Details:
+        - Service: ${bookingData.service.name}
+        - Date: ${bookingDate}
+        - Time: ${bookingData.time}
+        - Duration: ${bookingData.service.duration} minutes
+        - Quoted Price: ₹${totalCost}
+      `;
+
+      console.log("--- SIMULATING EMAIL TO CLIENT ---");
       console.log(`To: ${bookingData.email}`);
       console.log(`Subject: Your Appointment is Confirmed!`);
-      console.log(`Body: ${confirmationMessage}`);
-      console.log("------------------------");
+      console.log(`Body: ${clientEmailBody}`);
+      console.log("----------------------------------");
+
+      console.log("--- SIMULATING EMAIL TO BARBER ---");
+      console.log(`To: ${barberEmail}`);
+      console.log(`Subject: New Booking: ${bookingData.service.name} for ${bookingData.name}`);
+      console.log(`Body: ${barberEmailBody}`);
+      console.log("---------------------------------");
 
 
       return {
         bookingId: docRef.id,
-        message: 'Booking created and confirmation prepared.',
+        message: 'Booking created and confirmation prepared for client and barber.',
       };
     } catch (error) {
       console.error('Error in createBookingFlow: ', error);

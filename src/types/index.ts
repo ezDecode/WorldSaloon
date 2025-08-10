@@ -5,6 +5,7 @@ export type Service = {
   name: string;
   duration: number;
   price: number;
+  bookingFee: number;
   icon: LucideIcon;
 };
 

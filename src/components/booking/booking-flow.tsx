@@ -56,12 +56,7 @@ export function BookingFlow() {
 
     try {
       const result = await createBooking({
-        service: {
-          id: booking.service.id,
-          name: booking.service.name,
-          duration: booking.service.duration,
-          price: booking.service.price
-        },
+        service: booking.service,
         date: booking.date,
         time: booking.time,
         name: booking.name,

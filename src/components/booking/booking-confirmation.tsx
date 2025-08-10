@@ -25,6 +25,7 @@ export function BookingConfirmation({ booking, isPending, onConfirm, onBack }: P
   }
 
   const { service, date, time, name, email } = booking;
+  const totalPayable = service.price + service.bookingFee;
 
   return (
     <div className="max-w-md mx-auto">
@@ -54,9 +55,19 @@ export function BookingConfirmation({ booking, isPending, onConfirm, onBack }: P
             <Mail className="w-5 h-5 text-muted-foreground" />
             <span>{email}</span>
           </div>
-          <div className="flex items-center gap-3 font-bold">
-            <IndianRupee className="w-5 h-5 text-muted-foreground" />
-            <span>{service.price} (Pay at Salon)</span>
+          <div className="border-t pt-4 mt-2">
+            <div className="flex justify-between text-sm">
+                <span className="text-muted-foreground">Service Price:</span>
+                <span>₹{service.price}</span>
+            </div>
+             <div className="flex justify-between text-sm">
+                <span className="text-muted-foreground">Booking Fee:</span>
+                <span>₹{service.bookingFee}</span>
+            </div>
+            <div className="flex justify-between font-bold mt-2 text-base">
+                <span className="flex items-center gap-2"><IndianRupee className="w-5 h-5" />Total Payable at Salon:</span>
+                <span>₹{totalPayable}</span>
+            </div>
           </div>
         </CardContent>
        </Card>

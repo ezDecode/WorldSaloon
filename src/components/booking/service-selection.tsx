@@ -2,7 +2,7 @@ import { services } from "@/lib/data";
 import type { Service } from "@/types";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
-import { Clock, IndianRupee } from "lucide-react";
+import { Clock, IndianRupee, Plus } from "lucide-react";
 
 type Props = {
   onSelect: (service: Service) => void;
@@ -28,6 +28,8 @@ export function ServiceSelection({ onSelect }: Props) {
                   <div className="flex items-center gap-2">
                     <IndianRupee className="w-4 h-4 text-muted-foreground" />
                     <span>{service.price}</span>
+                    <Plus className="w-3 h-3 text-muted-foreground" />
+                    <span className="font-semibold">₹{service.bookingFee} Booking Fee</span>
                   </div>
                 </CardDescription>
               </div>
