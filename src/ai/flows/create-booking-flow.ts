@@ -13,6 +13,7 @@ import { getFirestore } from 'firebase-admin/firestore';
 import { initializeApp, getApps } from 'firebase-admin/app';
 import { format, parseISO } from "date-fns";
 import 'dotenv/config';
+import { services } from '@/lib/data';
 
 
 // Initialize Firebase Admin SDK
@@ -22,16 +23,8 @@ if (!getApps().length) {
 
 const db = getFirestore();
 
-const ServiceSchema = z.object({
-  id: z.number(),
-  name: z.string(),
-  duration: z.number(),
-  price: z.number(),
-  bookingFee: z.number(),
-});
-
 const CreateBookingInputSchema = z.object({
-  service: ServiceSchema,
+  serviceId: z.number(),
   date: z.string().describe('The date of the appointment in ISO format.'),
   time: z.string(),
   name: z.string(),
@@ -59,8 +52,23 @@ const createBookingFlow = ai.defineFlow(
     inputSchema: CreateBookingInputSchema,
     outputSchema: CreateBookingOutputSchema,
   },
-  async (bookingData) => {
+  async (inputData) => {
     try {
+      const service = services.find(s => s.id === inputData.serviceId);
+      if (!service) {
+          throw new Error('Invalid service ID');
+      }
+
+      const bookingData = {
+        ...inputData,
+        service: { // Reconstruct what's needed for storage and emails
+            name: service.name,
+            duration: service.duration,
+            price: service.price,
+            bookingFee: service.bookingFee,
+        }
+      };
+      
       const docRef = await db.collection('bookings').add({
         ...bookingData,
         createdAt: new Date().toISOString(),
