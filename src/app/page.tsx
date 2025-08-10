@@ -4,7 +4,7 @@ import { Testimonials } from '@/components/landing/testimonials';
 import { PhulkariPattern } from '@/components/phulkari-pattern';
 import { Button } from '@/components/ui/button';
 import { Github, Instagram, Twitter } from 'lucide-react';
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { Menu } from 'lucide-react';
 import { FeedbackForm } from '@/components/landing/feedback-form';
 import Link from 'next/link';
@@ -35,6 +35,9 @@ export default function Home() {
                 </Button>
               </SheetTrigger>
               <SheetContent side="right" className="w-[280px] sm:w-[340px]">
+                <SheetHeader>
+                  <SheetTitle className="sr-only">Menu</SheetTitle>
+                </SheetHeader>
                  <nav className="flex flex-col gap-4 mt-8">
                    <a href="#services" className="text-lg font-medium hover:underline">Services</a>
                    <a href="#testimonials" className="text-lg font-medium hover:underline">Testimonials</a>
