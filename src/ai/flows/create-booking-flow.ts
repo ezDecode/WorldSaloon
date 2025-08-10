@@ -14,15 +14,7 @@ import { initializeApp, getApps, cert } from 'firebase-admin/app';
 
 // Initialize Firebase Admin SDK
 if (!getApps().length) {
-  if (process.env.FIREBASE_SERVICE_ACCOUNT_KEY) {
-    const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT_KEY);
-    initializeApp({
-      credential: cert(serviceAccount),
-    });
-  } else {
-    // For local development, it might use default credentials
-    initializeApp();
-  }
+  initializeApp();
 }
 
 const db = getFirestore();
