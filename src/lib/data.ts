@@ -1,3 +1,4 @@
+
 import { Scissors, Sparkles, Star, User } from 'lucide-react';
 import type { Service } from '@/types';
 import { isBefore, set, startOfDay } from 'date-fns';
@@ -42,4 +43,3 @@ export const getAvailableTimeSlots = (date: Date): string[] => {
 
   return availableSlots;
 };
-```
