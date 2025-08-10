@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { createTestimonial } from "@/ai/flows/create-testimonial-flow";
 import { useToast } from "@/hooks/use-toast";
 import { useState } from "react";
 import { Loader2 } from "lucide-react";
@@ -32,7 +31,12 @@ export function FeedbackForm() {
   const handleFormSubmit = async (data: z.infer<typeof FormSchema>) => {
     setIsPending(true);
     try {
-      await createTestimonial(data);
+      const res = await fetch('/api/create-testimonial', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+      if (!res.ok) throw new Error('Failed to submit testimonial');
       toast({
         title: "Feedback Submitted",
         description: "Thank you for your review! It will appear on the site shortly.",

@@ -1,10 +1,18 @@
 
+import dynamic from 'next/dynamic';
 import { Hero } from '@/components/landing/hero';
 import { ServicesList } from '@/components/landing/services-list';
-import { Testimonials } from '@/components/landing/testimonials';
-import { FeedbackForm } from '@/components/landing/feedback-form';
 import { SiteHeader } from '@/components/landing/site-header';
 import { SiteFooter } from '@/components/landing/site-footer';
+import { ClientToaster } from '@/components/client-toaster';
+
+const Testimonials = dynamic(() => import('@/components/landing/testimonials').then(m => m.Testimonials), {
+  loading: () => null,
+});
+
+const FeedbackForm = dynamic(() => import('@/components/landing/feedback-form').then(m => m.FeedbackForm), {
+  loading: () => null,
+});
 
 export default function Home() {
 
@@ -31,6 +39,7 @@ export default function Home() {
       </main>
 
       <SiteFooter />
+      <ClientToaster />
     </div>
   );
 }
