@@ -41,7 +41,7 @@ export function Hero() {
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-transparent"></div>
       </div>
       <motion.div
-        className="container mx-auto px-4 md:px-6 relative z-10"
+        className="w-[80vw] mx-auto px-4 md:px-6 relative z-10"
         variants={containerVariants}
         initial="hidden"
         animate="visible"
