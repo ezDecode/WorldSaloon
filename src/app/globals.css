@@ -4,32 +4,32 @@
 
 @layer base {
   :root {
-    --background: 30 100% 99%; /* Very light beige */
-    --foreground: 20 14% 4%; /* Dark brown */
+    --background: 30 100% 98%; /* Lighter beige for a clean, airy feel */
+    --foreground: 20 14% 10%; /* Darker brown for stronger text contrast */
 
-    --card: 30 50% 96%;
-    --card-foreground: 20 14% 4%;
+    --card: 30 50% 94%;
+    --card-foreground: 20 14% 10%;
 
-    --popover: 30 100% 99%;
-    --popover-foreground: 20 14% 4%;
+    --popover: 30 100% 98%;
+    --popover-foreground: 20 14% 10%;
 
-    --primary: 35 92% 55%; /* Saffron */
+    --primary: 35 92% 55%; /* Rich Saffron - vibrant and energetic */
     --primary-foreground: 20 14% 4%;
 
-    --secondary: 40 30% 90%; /* Soft beige */
-    --secondary-foreground: 20 14% 4%;
+    --secondary: 40 30% 92%; /* Softer beige for subtle backgrounds */
+    --secondary-foreground: 20 14% 10%;
 
-    --muted: 40 30% 90%;
-    --muted-foreground: 20 10% 30%;
+    --muted: 40 30% 92%;
+    --muted-foreground: 20 10% 40%; /* Darker muted text */
 
-    --accent: 175 70% 45%; /* Teal */
-    --accent-foreground: 30 100% 99%;
+    --accent: 175 65% 40%; /* Deeper Teal for stronger visual cues */
+    --accent-foreground: 30 100% 98%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 35 20% 85%;
-    --input: 35 20% 85%;
+    --border: 35 20% 88%; /* Slightly darker border */
+    --input: 35 20% 88%;
     --ring: 35 92% 55%;
 
     --radius: 0.5rem;
