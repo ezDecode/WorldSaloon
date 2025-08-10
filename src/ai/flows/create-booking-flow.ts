@@ -1,6 +1,6 @@
 'use server';
 /**
- * @fileOverview A flow for creating a booking in Firestore.
+ * @fileOverview A flow for creating a booking in Firestore and sending a confirmation.
  *
  * - createBooking - A function that handles creating a new booking.
  * - CreateBookingInput - The input type for the createBooking function.
@@ -10,7 +10,9 @@
 import { ai } from '@/ai/genkit';
 import { z } from 'genkit';
 import { getFirestore } from 'firebase-admin/firestore';
-import { initializeApp, getApps, cert } from 'firebase-admin/app';
+import { initializeApp, getApps } from 'firebase-admin/app';
+import { sendWhatsAppConfirmation } from '@/services/whatsapp';
+import { format, parseISO } from "date-fns";
 
 // Initialize Firebase Admin SDK
 if (!getApps().length) {
@@ -60,14 +62,23 @@ const createBookingFlow = ai.defineFlow(
         ...bookingData,
         createdAt: new Date().toISOString(),
       });
-      console.log('Document written with ID: ', docRef.id);
+
+      // After successful booking, send a WhatsApp confirmation.
+      const confirmationMessage = 
+`Hi ${bookingData.name}, your appointment at Sardar Appointment is confirmed!
+Service: ${bookingData.service.name}
+Date: ${format(parseISO(bookingData.date), "EEEE, d MMMM yyyy")}
+Time: ${bookingData.time}
+We look forward to seeing you!`;
+
+      await sendWhatsAppConfirmation(bookingData.phone, confirmationMessage);
+
       return {
         bookingId: docRef.id,
-        message: 'Booking created successfully.',
+        message: 'Booking created and confirmation sent.',
       };
     } catch (error) {
-      console.error('Error adding document: ', error);
-      // It's better to throw an error that the client can catch
+      console.error('Error in createBookingFlow: ', error);
       throw new Error('Failed to create booking.');
     }
   }
