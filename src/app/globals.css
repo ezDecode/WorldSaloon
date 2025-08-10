@@ -1,49 +1,42 @@
-@import 'tailwindcss';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 @layer base {
   :root {
-    --background: 45 33% 97%; /* Lighter Soft Beige for more brightness */
-    --foreground: 240 10% 3.9%;
-    --card: 45 33% 97%;
-    --card-foreground: 240 10% 3.9%;
-    --popover: 45 33% 97%;
-    --popover-foreground: 240 10% 3.9%;
-    --primary: 35 92% 55%; /* Slightly more saturated Saffron */
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 50%; /* Darker muted foreground for better contrast */
-    --accent: 175 70% 45%; /* Deeper Teal for stronger accent */
-    --accent-foreground: 210 40% 98%;
+    --background: 30 100% 99%; /* Very light beige */
+    --foreground: 20 14% 4%; /* Dark brown */
+
+    --card: 30 50% 96%;
+    --card-foreground: 20 14% 4%;
+
+    --popover: 30 100% 99%;
+    --popover-foreground: 20 14% 4%;
+
+    --primary: 35 92% 55%; /* Saffron */
+    --primary-foreground: 20 14% 4%;
+
+    --secondary: 40 30% 90%; /* Soft beige */
+    --secondary-foreground: 20 14% 4%;
+
+    --muted: 40 30% 90%;
+    --muted-foreground: 20 10% 30%;
+
+    --accent: 175 70% 45%; /* Teal */
+    --accent-foreground: 30 100% 99%;
+
     --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 35 20% 85%;
+    --input: 35 20% 85%;
     --ring: 35 92% 55%;
+
     --radius: 0.5rem;
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 35 92% 55%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 175 70% 45%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 35 92% 55%;
+    /* Define dark mode colors if needed */
   }
 }
 
