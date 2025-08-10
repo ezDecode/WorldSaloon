@@ -8,7 +8,7 @@
 
 import { ai } from '@/ai/genkit';
 import { z } from 'genkit';
-import { getFirestore } from 'firebase-admin/firestore';
+import { getFirestore, FieldValue } from 'firebase-admin/firestore';
 import { initializeApp, getApps } from 'firebase-admin/app';
 import 'dotenv/config';
 
@@ -42,7 +42,7 @@ const createTestimonialFlow = ai.defineFlow(
       const firstInitial = testimonialData.name.charAt(0).toUpperCase();
       await db.collection('testimonials').add({
         ...testimonialData,
-        createdAt: new Date(), // Use Firestore server timestamp for accuracy
+        createdAt: FieldValue.serverTimestamp(), // Use Firestore server timestamp
         avatarUrl: `https://placehold.co/100x100/F5F5DC/333333.png?text=${firstInitial}`
       });
       console.log('Testimonial created successfully');
