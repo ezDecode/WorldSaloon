@@ -2,6 +2,7 @@ import type {Metadata} from 'next';
 import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
 import { Poppins, PT_Sans } from 'next/font/google';
+import { Manrope } from 'next/font/google';
 import { cn } from '@/lib/utils';
 
 const headlineFont = Poppins({
@@ -32,7 +33,6 @@ export default function RootLayout({
       <head />
       <body className="font-body antialiased">
         {children}
-        <Toaster />
       </body>
     </html>
   );

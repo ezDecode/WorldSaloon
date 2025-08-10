@@ -1,17 +1,18 @@
 "use client";
 
+import dynamic from 'next/dynamic';
 import { useState } from 'react';
 import type { Booking, Service } from '@/types';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Card, CardHeader, CardTitle, CardContent, CardDescription } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
 import { ProgressBar } from './progress-bar';
-import { ServiceSelection } from './service-selection';
-import { TimeSlotSelection } from './timeslot-selection';
-import { UserDetailsForm } from './user-details-form';
-import { BookingConfirmation } from './booking-confirmation';
-import { BookingComplete } from './booking-complete';
-import { createBooking } from '@/ai/flows/create-booking-flow';
+
+const ServiceSelection = dynamic(() => import('./service-selection').then(m => m.ServiceSelection));
+const TimeSlotSelection = dynamic(() => import('./timeslot-selection').then(m => m.TimeSlotSelection));
+const UserDetailsForm = dynamic(() => import('./user-details-form').then(m => m.UserDetailsForm));
+const BookingConfirmation = dynamic(() => import('./booking-confirmation').then(m => m.BookingConfirmation));
+const BookingComplete = dynamic(() => import('./booking-complete').then(m => m.BookingComplete));
 
 const initialBookingState: Booking = {
   service: null,
@@ -66,8 +67,23 @@ export function BookingFlow() {
         phone: booking.phone,
         notes: booking.notes,
         whatsappOptIn: booking.whatsappOptIn,
+      const res = await fetch('/api/create-booking', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          serviceId: booking.service.id,
+          date: booking.date,
+          time: booking.time,
+          name: booking.name,
+          email: booking.email,
+          phone: booking.phone,
+          notes: booking.notes,
+        }),
       });
 
+      if (!res.ok) throw new Error('Failed to create booking');
+
+      const result = await res.json();
       console.log('Booking confirmed:', result);
       setStep(5);
     } catch (error) {

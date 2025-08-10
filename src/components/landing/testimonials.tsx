@@ -6,10 +6,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Star } from "lucide-react";
 import { useEffect, useState } from "react";
 import type { Testimonial } from "@/types";
-import { app } from "@/lib/firebase"; 
-import { getFirestore, collection, getDocs, orderBy, query } from "firebase/firestore";
 import { Skeleton } from "../ui/skeleton";
-
 
 export function Testimonials() {
   const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
@@ -18,12 +15,10 @@ export function Testimonials() {
   useEffect(() => {
     const fetchTestimonials = async () => {
       try {
-        const db = getFirestore(app);
-        const testimonialsCol = collection(db, "testimonials");
-        const q = query(testimonialsCol, orderBy("createdAt", "desc"));
-        const testimonialSnapshot = await getDocs(q);
-        const testimonialList = testimonialSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Testimonial));
-        setTestimonials(testimonialList);
+        const res = await fetch('/api/testimonials');
+        if (!res.ok) throw new Error('Failed to fetch testimonials');
+        const data = await res.json();
+        setTestimonials(data.testimonials || []);
       } catch (error) {
         console.error("Error fetching testimonials: ", error);
       } finally {
@@ -71,6 +66,7 @@ export function Testimonials() {
                       fill
                       style={{objectFit: 'cover'}}
                       data-ai-hint="portrait person"
+                      loading="lazy"
                     />
                   </div>
                   <div>
