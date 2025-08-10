@@ -4,33 +4,33 @@
 
 @layer base {
   :root {
-    --background: 30 100% 98%; /* Lighter beige for a clean, airy feel */
-    --foreground: 20 14% 10%; /* Darker brown for stronger text contrast */
+    --background: 210 20% 98%; /* Light Cool Gray */
+    --foreground: 220 15% 15%; /* Almost Black */
 
-    --card: 30 50% 94%;
-    --card-foreground: 20 14% 10%;
+    --card: 210 20% 96%;
+    --card-foreground: 220 15% 15%;
 
-    --popover: 30 100% 98%;
-    --popover-foreground: 20 14% 10%;
+    --popover: 210 20% 98%;
+    --popover-foreground: 220 15% 15%;
 
-    --primary: 35 92% 55%; /* Rich Saffron - vibrant and energetic */
-    --primary-foreground: 20 14% 4%;
+    --primary: 225 75% 60%; /* Modern Blue */
+    --primary-foreground: 0 0% 100%;
 
-    --secondary: 40 30% 92%; /* Softer beige for subtle backgrounds */
-    --secondary-foreground: 20 14% 10%;
+    --secondary: 215 15% 90%; /* Light Gray */
+    --secondary-foreground: 220 15% 15%;
 
-    --muted: 40 30% 92%;
-    --muted-foreground: 20 10% 40%; /* Darker muted text */
+    --muted: 215 15% 90%;
+    --muted-foreground: 220 10% 45%;
 
-    --accent: 175 65% 40%; /* Deeper Teal for stronger visual cues */
-    --accent-foreground: 30 100% 98%;
+    --accent: 260 80% 65%; /* Vibrant Purple */
+    --accent-foreground: 0 0% 100%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 35 20% 88%; /* Slightly darker border */
-    --input: 35 20% 88%;
-    --ring: 35 92% 55%;
+    --border: 215 15% 88%;
+    --input: 215 15% 88%;
+    --ring: 225 75% 60%;
 
     --radius: 0.5rem;
   }
