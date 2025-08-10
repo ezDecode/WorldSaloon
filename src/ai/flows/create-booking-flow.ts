@@ -13,6 +13,8 @@ import { getFirestore } from 'firebase-admin/firestore';
 import { initializeApp, getApps } from 'firebase-admin/app';
 import { sendWhatsAppConfirmation } from '@/services/whatsapp';
 import { format, parseISO } from "date-fns";
+import 'dotenv/config';
+
 
 // Initialize Firebase Admin SDK
 if (!getApps().length) {
