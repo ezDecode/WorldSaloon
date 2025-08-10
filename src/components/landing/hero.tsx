@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 
 export function Hero() {
   return (
@@ -25,7 +26,7 @@ export function Hero() {
           </p>
           <div className="mt-8 flex gap-4 justify-center">
             <Button size="lg" className="bg-primary/90 hover:bg-primary text-primary-foreground font-bold" asChild>
-              <a href="#booking">Book an Appointment</a>
+              <Link href="/book">Book an Appointment</Link>
             </Button>
           </div>
         </div>
