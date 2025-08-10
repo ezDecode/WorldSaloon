@@ -42,3 +42,4 @@ export const getAvailableTimeSlots = (date: Date): string[] => {
 
   return availableSlots;
 };
+```

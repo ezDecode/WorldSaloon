@@ -1,16 +1,17 @@
 import { initializeApp, getApps, getApp } from 'firebase/app';
 
+// It's recommended to use environment variables for Firebase config
 const firebaseConfig = {
-  projectId: 'sardar-appointment',
-  appId: '1:571893381659:web:39575f69bab409a00bd6be',
-  storageBucket: 'sardar-appointment.firebasestorage.app',
-  apiKey: 'AIzaSyCNjHSgLbg2wJOdWzz7JrzpUGDWuUZhtGI',
-  authDomain: 'sardar-appointment.firebaseapp.com',
-  measurementId: '',
-  messagingSenderId: '571893381659',
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
 };
 
 // Initialize Firebase
 const app = !getApps().length ? initializeApp(firebaseConfig) : getApp();
 
 export { app };
+```
