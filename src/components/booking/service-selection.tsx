@@ -12,7 +12,7 @@ export function ServiceSelection({ onSelect }: Props) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
       {services.map((service) => (
-        <Card key={service.id} className="flex flex-col justify-between hover:shadow-lg transition-shadow duration-300">
+        <Card key={service.id} className="flex flex-col justify-between hover:shadow-lg transition-shadow duration-300 bg-background hover:border-primary">
           <CardHeader>
             <div className="flex items-start gap-4">
               <div className="bg-primary/10 text-primary p-3 rounded-lg">

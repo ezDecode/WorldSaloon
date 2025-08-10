@@ -8,7 +8,7 @@ export function PhulkariPattern({ className }: { className?: string }) {
           <g className="fill-primary/80">
             <path d="M0-45l13.1 22.7L39.4-4.5l-26.2 18.2L0,36l-13.1-22.7L-39.4,4.5l26.2-18.2z" />
           </g>
-          <g className="fill-primary/40">
+          <g className="fill-accent/80">
              <path d="M-26.2-18.2L0-36l26.2,18.2L13.1,22.7L-13.1,22.7L-39.4-4.5z" />
           </g>
           <circle cx="0" cy="0" r="10" className="fill-primary" />

@@ -4,15 +4,14 @@ import Link from 'next/link';
 
 export function Hero() {
   return (
-    <section className="relative bg-black text-white py-20 md:py-32 overflow-hidden">
-      <div className="absolute inset-0 z-0">
+    <section className="relative bg-background text-foreground py-20 md:py-32 overflow-hidden">
+      <div className="absolute inset-0 z-0 opacity-10">
         <Image 
           src="https://placehold.co/1200x800.png" 
           alt="Modern barbershop interior" 
           fill
           style={{objectFit: 'cover'}}
           data-ai-hint="barbershop interior dark"
-          className="opacity-20"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-transparent"></div>
       </div>
@@ -25,7 +24,7 @@ export function Hero() {
             Experience the finest grooming services in Kapurthala. We combine modern techniques with timeless style to give you the perfect look.
           </p>
           <div className="mt-8 flex gap-4 justify-center">
-            <Button size="lg" className="bg-primary/90 hover:bg-primary text-primary-foreground font-bold" asChild>
+            <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold" asChild>
               <Link href="/book">Book an Appointment</Link>
             </Button>
           </div>

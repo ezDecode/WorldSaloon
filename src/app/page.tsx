@@ -13,7 +13,7 @@ export default function Home() {
 
   return (
     <div className="flex flex-col min-h-screen bg-background">
-      <header className="sticky top-0 z-50 w-full bg-background/80 backdrop-blur-sm border-b border-white/10">
+      <header className="sticky top-0 z-50 w-full bg-background/80 backdrop-blur-sm border-b">
         <div className="container mx-auto flex h-20 items-center justify-between px-4 md:px-6">
           <Link href="/" className="flex items-center gap-3" aria-label="Sardar Appointment Home">
             <PhulkariPattern className="w-12 h-12" />
@@ -24,7 +24,7 @@ export default function Home() {
           <nav className="hidden md:flex gap-2 items-center">
             <Button variant="ghost" asChild><a href="#services">Services</a></Button>
             <Button variant="ghost" asChild><a href="#testimonials">Testimonials</a></Button>
-            <Button className="bg-primary/90 hover:bg-primary text-primary-foreground" asChild><Link href="/book">Book Now</Link></Button>
+            <Button className="bg-primary hover:bg-primary/90 text-primary-foreground" asChild><Link href="/book">Book Now</Link></Button>
           </nav>
            <div className="md:hidden">
              <Sheet>
@@ -54,7 +54,7 @@ export default function Home() {
         <ServicesList />
         <Testimonials />
 
-        <section id="feedback" className="py-16 md:py-24 bg-secondary/20">
+        <section id="feedback" className="py-16 md:py-24 bg-secondary/30">
             <div className="container mx-auto px-4 md:px-6">
                 <div className="text-center mb-12">
                     <h2 className="text-3xl md:text-4xl font-headline font-bold">Leave a Review</h2>
@@ -67,7 +67,7 @@ export default function Home() {
         </section>
       </main>
 
-      <footer className="bg-secondary text-secondary-foreground border-t border-white/10">
+      <footer className="bg-secondary text-secondary-foreground border-t">
         <div className="container mx-auto py-8 px-4 md:px-6 flex flex-col md:flex-row justify-between items-center gap-6">
           <div className="text-center md:text-left">
             <h3 className="text-xl font-headline font-bold">Sardar Appointment</h3>

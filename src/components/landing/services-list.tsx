@@ -13,7 +13,7 @@ export function ServicesList() {
         </div>
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
           {services.map((service) => (
-            <Card key={service.id} className="text-center flex flex-col items-center p-6 border-2 border-transparent hover:border-primary transition-colors duration-300 bg-secondary/50">
+            <Card key={service.id} className="text-center flex flex-col items-center p-6 border-2 border-transparent hover:border-primary hover:shadow-lg transition-all duration-300 bg-secondary/30">
               <div className="mb-4 bg-primary/10 text-primary p-4 rounded-full">
                 <service.icon className="w-8 h-8" />
               </div>

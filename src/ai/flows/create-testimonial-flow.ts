@@ -39,10 +39,11 @@ const createTestimonialFlow = ai.defineFlow(
   },
   async (testimonialData) => {
     try {
+      const firstInitial = testimonialData.name.charAt(0).toUpperCase();
       await db.collection('testimonials').add({
         ...testimonialData,
         createdAt: new Date(), // Use Firestore server timestamp for accuracy
-        avatarUrl: `https://placehold.co/100x100.png?text=${testimonialData.name.charAt(0)}`
+        avatarUrl: `https://placehold.co/100x100/F5F5DC/333333.png?text=${firstInitial}`
       });
       console.log('Testimonial created successfully');
     } catch (error) {
