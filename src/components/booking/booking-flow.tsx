@@ -19,6 +19,7 @@ const initialBookingState: Booking = {
   time: null,
   name: '',
   email: '',
+  phone: '',
   notes: '',
 };
 
@@ -45,13 +46,13 @@ export function BookingFlow() {
     setStep(3);
   };
 
-  const handleUserDetailsSubmit = (details: { name: string; email: string; notes: string }) => {
+  const handleUserDetailsSubmit = (details: { name: string; email: string; phone: string; notes: string }) => {
     setBooking({ ...booking, ...details });
     setStep(4);
   };
 
   const handleBookingConfirm = async () => {
-    if (!booking.service || !booking.date || !booking.time) return;
+    if (!booking.service || !booking.date || !booking.time || !booking.phone) return;
     setIsPending(true);
 
     try {
@@ -61,14 +62,11 @@ export function BookingFlow() {
         time: booking.time,
         name: booking.name,
         email: booking.email,
+        phone: booking.phone,
         notes: booking.notes,
       });
 
       console.log('Booking confirmed:', result);
-      toast({
-        title: "Booking Confirmed!",
-        description: "Your appointment has been successfully scheduled.",
-      });
       setStep(5);
     } catch (error) {
        console.error("Booking failed", error);

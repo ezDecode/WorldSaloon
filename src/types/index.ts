@@ -15,5 +15,6 @@ export type Booking = {
   time: string | null;
   name: string;
   email: string;
+  phone: string;
   notes: string;
 };

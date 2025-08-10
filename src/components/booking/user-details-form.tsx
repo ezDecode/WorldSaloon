@@ -5,22 +5,23 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Mail, Phone, User } from "lucide-react";
 
 type Props = {
-  onSubmit: (details: { name: string; email: string; notes: string }) => void;
+  onSubmit: (details: { name: string; email: string; phone: string; notes: string }) => void;
   onBack: () => void;
 };
 
 export function UserDetailsForm({ onSubmit, onBack }: Props) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const [notes, setNotes] = useState("");
   const [error, setError] = useState("");
 
   const handleSubmit = () => {
-    if (!name || !email) {
-      setError("Please fill in your name and email address.");
+    if (!name || !email || !phone) {
+      setError("Please fill in your name, email, and phone number.");
       return;
     }
     // Basic email validation
@@ -29,19 +30,23 @@ export function UserDetailsForm({ onSubmit, onBack }: Props) {
       return;
     }
     setError("");
-    onSubmit({ name, email, notes });
+    onSubmit({ name, email, phone, notes });
   };
 
   return (
     <div className="max-w-md mx-auto">
       <div className="space-y-4">
         <div>
-          <Label htmlFor="name">Full Name</Label>
+          <Label htmlFor="name" className="flex items-center gap-2 mb-1"><User className="w-4 h-4"/>Full Name</Label>
           <Input id="name" value={name} onChange={(e) => setName(e.target.value)} placeholder="e.g. Gurpreet Singh" />
         </div>
         <div>
-          <Label htmlFor="email">Email Address</Label>
+          <Label htmlFor="email" className="flex items-center gap-2 mb-1"><Mail className="w-4 h-4"/>Email Address</Label>
           <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="For email notifications" />
+        </div>
+         <div>
+          <Label htmlFor="phone" className="flex items-center gap-2 mb-1"><Phone className="w-4 h-4"/>Phone Number</Label>
+          <Input id="phone" type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="For calls, if needed" />
         </div>
         <div>
           <Label htmlFor="notes">Notes (Optional)</Label>

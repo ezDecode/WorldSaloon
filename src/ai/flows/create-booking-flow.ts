@@ -36,6 +36,7 @@ const CreateBookingInputSchema = z.object({
   time: z.string(),
   name: z.string(),
   email: z.string(),
+  phone: z.string(),
   notes: z.string().optional(),
 });
 
@@ -100,6 +101,7 @@ const createBookingFlow = ai.defineFlow(
         Client Details:
         - Name: ${bookingData.name}
         - Email: ${bookingData.email}
+        - Phone: ${bookingData.phone}
         - Notes: ${bookingData.notes || 'None'}
 
         Appointment Details:

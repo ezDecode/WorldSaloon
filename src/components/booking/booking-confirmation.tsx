@@ -1,7 +1,7 @@
 import type { Booking } from "@/types";
 import { Button } from "@/components/ui/button";
 import { format, parseISO } from "date-fns";
-import { ArrowLeft, Calendar, Clock, User, Mail, IndianRupee, Scissors, Loader2 } from "lucide-react";
+import { ArrowLeft, Calendar, Clock, User, Mail, IndianRupee, Scissors, Loader2, Phone } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "../ui/card";
 
 type Props = {
@@ -24,7 +24,7 @@ export function BookingConfirmation({ booking, isPending, onConfirm, onBack }: P
     );
   }
 
-  const { service, date, time, name, email } = booking;
+  const { service, date, time, name, email, phone } = booking;
   const totalPayable = service.price + service.bookingFee;
 
   return (
@@ -55,6 +55,10 @@ export function BookingConfirmation({ booking, isPending, onConfirm, onBack }: P
             <Mail className="w-5 h-5 text-muted-foreground" />
             <span>{email}</span>
           </div>
+           <div className="flex items-center gap-3">
+            <Phone className="w-5 h-5 text-muted-foreground" />
+            <span>{phone}</span>
+          </div>
           <div className="border-t pt-4 mt-2">
             <div className="flex justify-between text-sm">
                 <span className="text-muted-foreground">Service Price:</span>
@@ -77,7 +81,7 @@ export function BookingConfirmation({ booking, isPending, onConfirm, onBack }: P
           <ArrowLeft className="mr-2 h-4 w-4" /> Back
         </Button>
         <Button onClick={onConfirm} disabled={isPending}>
-          {isPending ? <Loader2 className="animate-spin" /> : "Book Now"}
+          {isPending ? <Loader2 className="animate-spin" /> : "Confirm & Book"}
         </Button>
       </div>
     </div>
