@@ -15,10 +15,10 @@ export function Testimonials() {
   useEffect(() => {
     const fetchTestimonials = async () => {
       try {
-        const res = await fetch('/api/testimonials');
+        const res = await fetch(`/api/testimonials?limit=9`, { cache: 'no-store' });
         if (!res.ok) throw new Error('Failed to fetch testimonials');
         const data = await res.json();
-        setTestimonials(data.testimonials || []);
+        setTestimonials((data.testimonials || []) as Testimonial[]);
       } catch (error) {
         console.error("Error fetching testimonials: ", error);
       } finally {

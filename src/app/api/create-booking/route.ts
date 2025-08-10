@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { z } from 'genkit';
+import { z } from 'zod';
 import { createBooking } from '@/ai/flows/create-booking-flow';
 
 const CreateBookingInputSchema = z.object({

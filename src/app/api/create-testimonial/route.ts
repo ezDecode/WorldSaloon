@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { z } from 'genkit';
+import { z } from 'zod';
 import { createTestimonial } from '@/ai/flows/create-testimonial-flow';
 
 const CreateTestimonialInputSchema = z.object({
