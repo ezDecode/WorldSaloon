@@ -4,39 +4,40 @@
 
 @layer base {
   :root {
-    --background: 210 20% 98%; /* Light Cool Gray */
-    --foreground: 220 15% 15%; /* Almost Black */
+    /* Blueprint color system */
+    --background: 48 43% 96%; /* Soft beige (#F5F5DC approx) */
+    --foreground: 220 15% 15%;
 
-    --card: 210 20% 96%;
+    --card: 48 43% 98%;
     --card-foreground: 220 15% 15%;
 
-    --popover: 210 20% 98%;
+    --popover: 48 43% 98%;
     --popover-foreground: 220 15% 15%;
 
-    --primary: 225 75% 60%; /* Modern Blue */
+    --primary: 30 100% 60%; /* Saffron (~#FF9933) */
     --primary-foreground: 0 0% 100%;
 
-    --secondary: 215 15% 90%; /* Light Gray */
+    --secondary: 210 20% 92%;
     --secondary-foreground: 220 15% 15%;
 
-    --muted: 215 15% 90%;
+    --muted: 210 20% 92%;
     --muted-foreground: 220 10% 45%;
 
-    --accent: 260 80% 65%; /* Vibrant Purple */
+    --accent: 172 67% 51%; /* Teal (#30D5C8) */
     --accent-foreground: 0 0% 100%;
 
-    --destructive: 0 84.2% 60.2%;
+    --destructive: 0 72% 50%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 215 15% 88%;
-    --input: 215 15% 88%;
-    --ring: 225 75% 60%;
+    --border: 210 20% 85%;
+    --input: 210 20% 85%;
+    --ring: 30 100% 60%;
 
-    --radius: 0.5rem;
+    --radius: 0.75rem;
   }
 
   .dark {
-    /* Define dark mode colors if needed */
+    /* Optional dark theme */
   }
 }
 

@@ -1,4 +1,5 @@
 
+import type { Metadata } from 'next';
 import dynamic from 'next/dynamic';
 import { Hero } from '@/components/landing/hero';
 import { ServicesList } from '@/components/landing/services-list';
@@ -14,6 +15,11 @@ const FeedbackForm = dynamic(() => import('@/components/landing/feedback-form').
   loading: () => null,
 });
 
+export const metadata: Metadata = {
+  title: 'Sardar Appointment | Best Barbershop in Kapurthala',
+  description: 'Book haircuts, beard trims, and traditional shaves at Sardar Appointment. Easy booking, WhatsApp reminders, and pay in-salon.',
+};
+
 export default function Home() {
 
   return (
@@ -25,7 +31,7 @@ export default function Home() {
         <ServicesList />
         <Testimonials />
 
-        <section id="feedback" className="py-16 md:py-24 bg-secondary/30">
+        <section id="feedback" className="py-20 md:py-28 bg-secondary/30">
             <div className="w-[80vw] mx-auto px-4 md:px-6">
                 <div className="text-center mb-12">
                     <h2 className="text-3xl md:text-4xl font-headline font-bold">Leave a Review</h2>

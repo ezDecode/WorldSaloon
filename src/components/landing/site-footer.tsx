@@ -3,30 +3,23 @@ import { Button } from "@/components/ui/button";
 import { Github, Instagram, Twitter } from "lucide-react";
 
 export function SiteFooter() {
-    return (
-        <footer className="bg-secondary text-secondary-foreground border-t">
-            <div className="w-[80vw] mx-auto py-8 px-4 md:px-6 flex flex-col md:flex-row justify-between items-center gap-6">
-                <div className="text-center md:text-left">
-                    <h3 className="text-xl font-headline font-bold">Sardar Appointment</h3>
-                    <p className="text-sm text-muted-foreground mt-1">
-                        Kapurthala, Punjab, India
-                    </p>
-                    <p className="text-sm text-muted-foreground mt-1">
-                        © {new Date().getFullYear()} Sardar Appointment. All rights reserved.
-                    </p>
-                </div>
-                <div className="flex gap-4">
-                    <Button variant="ghost" size="icon" asChild>
-                        <a href="#" aria-label="Instagram"><Instagram /></a>
-                    </Button>
-                    <Button variant="ghost" size="icon" asChild>
-                        <a href="#" aria-label="Twitter"><Twitter /></a>
-                    </Button>
-                    <Button variant="ghost" size="icon" asChild>
-                        <a href="#" aria-label="Github"><Github /></a>
-                    </Button>
-                </div>
-            </div>
-        </footer>
-    );
+  return (
+    <footer className="border-t bg-background">
+      <div className="w-[80vw] mx-auto px-4 md:px-6 py-10 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+        <div>
+          <h3 className="font-headline font-bold text-lg">Sardar Appointment</h3>
+          <p className="text-muted-foreground mt-2 text-sm">Precision grooming in Kapurthala. Classic techniques, contemporary style.</p>
+        </div>
+        <div>
+          <h4 className="font-semibold">Visit Us</h4>
+          <p className="text-sm text-muted-foreground mt-2">Kapurthala, Punjab<br/>Mon–Sat: 10:00–20:00<br/>Sunday: Closed</p>
+        </div>
+        <div>
+          <h4 className="font-semibold">Contact</h4>
+          <p className="text-sm text-muted-foreground mt-2">Phone: +91-00000-00000<br/>Email: hello@sardarappointment.com</p>
+        </div>
+      </div>
+      <div className="text-center text-xs text-muted-foreground pb-6">© {new Date().getFullYear()} Sardar Appointment. All rights reserved.</div>
+    </footer>
+  );
 }

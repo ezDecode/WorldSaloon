@@ -1,6 +1,7 @@
 
 import { services } from '@/lib/data';
 import { Card } from '../ui/card';
+import { Button } from '../ui/button';
 
 export function ServicesList() {
   return (
@@ -14,14 +15,19 @@ export function ServicesList() {
         </div>
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
           {services.map((service) => (
-            <Card key={service.id} className="text-center flex flex-col items-center p-6 border-2 border-transparent hover:border-primary hover:shadow-lg transition-all duration-300 bg-secondary/30">
+            <Card key={service.id} className="text-center flex flex-col items-center p-6 border-2 border-transparent hover:border-primary/60 hover:shadow-lg transition-all duration-300 bg-secondary/30">
               <div className="mb-4 bg-primary/10 text-primary p-4 rounded-full">
                 <service.icon className="w-8 h-8" />
               </div>
               <h3 className="font-headline text-xl mb-2 font-semibold">{service.name}</h3>
-              <p className="text-muted-foreground text-sm mb-4">{service.duration} mins</p>
+              <div className="flex items-center gap-2 text-xs text-foreground/70 mb-3">
+                <span className="px-2 py-1 rounded-full bg-accent/10 text-accent">{service.duration} mins</span>
+                <span className="px-2 py-1 rounded-full bg-primary/10 text-primary">₹{service.bookingFee} fee</span>
+              </div>
               <p className="text-2xl font-bold mb-4">₹{service.price}</p>
-              <p className="text-xs text-muted-foreground">+ ₹{service.bookingFee} booking fee</p>
+              <a href="/book" className="mt-auto">
+                <Button variant="outline" size="sm">Book now</Button>
+              </a>
             </Card>
           ))}
         </div>

@@ -40,7 +40,7 @@ export function Testimonials() {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {loading && Array.from({ length: 3 }).map((_, i) => (
-             <Card key={i} className="bg-background border p-6 shadow-lg">
+             <Card key={i} className="bg-background border p-6 shadow-sm">
                <CardContent className="p-0">
                   <div className="flex items-center mb-4">
                     <Skeleton className="w-14 h-14 rounded-full mr-4" />
@@ -56,10 +56,10 @@ export function Testimonials() {
              </Card>
           ))}
           {!loading && testimonials.map((testimonial) => (
-            <Card key={testimonial.id} className="bg-background border p-6 shadow-lg">
+            <Card key={testimonial.id} className="bg-background border p-6 shadow-sm hover:border-accent/60 transition-colors">
               <CardContent className="p-0">
                 <div className="flex items-center mb-4">
-                  <div className="w-14 h-14 rounded-full overflow-hidden mr-4 relative border-2 border-primary">
+                  <div className="w-14 h-14 rounded-full overflow-hidden mr-4 relative border-2 border-primary/70">
                     <Image 
                       src={testimonial.avatarUrl || "https://placehold.co/100x100.png"} 
                       alt={`Avatar of ${testimonial.name}`} 

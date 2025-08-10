@@ -8,7 +8,7 @@ export default function BookPage() {
        <div className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl font-headline font-bold">Book Your Slot</h1>
           <p className="text-muted-foreground mt-3 max-w-2xl mx-auto">
-              Find a time that works for you. All bookings require a small, non-refundable booking fee to secure your spot.
+              Find a time that works for you. All bookings include a small booking fee to secure your spot and are payable in-salon.
           </p>
       </div>
       <BookingFlow />

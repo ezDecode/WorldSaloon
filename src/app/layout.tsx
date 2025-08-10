@@ -1,12 +1,21 @@
 import type {Metadata} from 'next';
 import './globals.css';
+import { Toaster } from "@/components/ui/toaster";
+import { Poppins, PT_Sans } from 'next/font/google';
 import { Manrope } from 'next/font/google';
 import { cn } from '@/lib/utils';
 
-const fontSans = Manrope({
+const headlineFont = Poppins({
   subsets: ['latin'],
-  weight: ['400', '600', '800'],
-  variable: '--font-sans',
+  weight: ['400','600','700','800'],
+  variable: '--font-headline',
+});
+
+const bodyFont = PT_Sans({
+  subsets: ['latin'],
+  weight: ['400','700'],
+  style: ['normal','italic'],
+  variable: '--font-body',
 });
 
 export const metadata: Metadata = {
@@ -20,7 +29,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={cn("scroll-smooth light", fontSans.variable)}>
+    <html lang="en" className={cn("scroll-smooth light", headlineFont.variable, bodyFont.variable)}>
       <head />
       <body className="font-body antialiased">
         {children}

@@ -22,6 +22,7 @@ const initialBookingState: Booking = {
   email: '',
   phone: '',
   notes: '',
+  whatsappOptIn: true,
 };
 
 const steps = [
@@ -47,7 +48,7 @@ export function BookingFlow() {
     setStep(3);
   };
 
-  const handleUserDetailsSubmit = (details: { name: string; email: string; phone: string; notes: string }) => {
+  const handleUserDetailsSubmit = (details: { name: string; email: string; phone: string; notes: string; whatsappOptIn?: boolean }) => {
     setBooking({ ...booking, ...details });
     setStep(4);
   };
@@ -57,6 +58,15 @@ export function BookingFlow() {
     setIsPending(true);
 
     try {
+      const result = await createBooking({
+        serviceId: booking.service.id,
+        date: booking.date,
+        time: booking.time,
+        name: booking.name,
+        email: booking.email,
+        phone: booking.phone,
+        notes: booking.notes,
+        whatsappOptIn: booking.whatsappOptIn,
       const res = await fetch('/api/create-booking', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

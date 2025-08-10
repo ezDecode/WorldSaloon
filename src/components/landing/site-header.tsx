@@ -20,6 +20,7 @@ export function SiteHeader() {
                 <nav className="hidden md:flex gap-2 items-center">
                     <Button variant="ghost" asChild><a href="/#services">Services</a></Button>
                     <Button variant="ghost" asChild><a href="/#testimonials">Testimonials</a></Button>
+                    <Button variant="outline" size="sm" className="mr-2">EN</Button>
                     <Link href="/book">
                         <Button className="bg-primary hover:bg-primary/90 text-primary-foreground">
                             Book Now
@@ -42,6 +43,7 @@ export function SiteHeader() {
                                 <a href="/#services" className="text-lg font-medium hover:underline">Services</a>
                                 <a href="/#testimonials" className="text-lg font-medium hover:underline">Testimonials</a>
                                 <Link href="/book" className="text-lg font-medium hover:underline">Book Now</Link>
+                                <button className="text-left text-sm px-2 py-1 rounded border w-fit">EN</button>
                             </nav>
                         </SheetContent>
                     </Sheet>
