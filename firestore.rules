@@ -2,17 +2,15 @@ rules_version = '2';
 
 service cloud.firestore {
   match /databases/{database}/documents {
-    
-    // Testimonials: Allow public read and creation of new testimonials.
-    // Do not allow updates or deletes from clients.
+
+    // Allow anyone to read testimonials
     match /testimonials/{testimonialId} {
       allow read, create: if true;
     }
 
-    // Bookings: Allow anyone to create a new booking.
-    // Do not allow read, update, or delete from clients.
+    // Allow anyone to create a booking
     match /bookings/{bookingId} {
-      allow create: if true;
+        allow create: if true;
     }
   }
 }
