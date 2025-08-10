@@ -106,4 +106,3 @@ export function UserDetailsForm({ onSubmit, onBack }: Props) {
     </Form>
   );
 }
-```
