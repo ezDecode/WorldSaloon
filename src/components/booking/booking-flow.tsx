@@ -58,15 +58,6 @@ export function BookingFlow() {
     setIsPending(true);
 
     try {
-      const result = await createBooking({
-        serviceId: booking.service.id,
-        date: booking.date,
-        time: booking.time,
-        name: booking.name,
-        email: booking.email,
-        phone: booking.phone,
-        notes: booking.notes,
-        whatsappOptIn: booking.whatsappOptIn,
       const res = await fetch('/api/create-booking', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -78,6 +69,7 @@ export function BookingFlow() {
           email: booking.email,
           phone: booking.phone,
           notes: booking.notes,
+          whatsappOptIn: booking.whatsappOptIn,
         }),
       });
 
