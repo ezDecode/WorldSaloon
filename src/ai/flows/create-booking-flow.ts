@@ -7,8 +7,7 @@
  * - CreateBookingOutput - The return type for the createBooking function.
  */
 
-import { ai } from '@/ai/genkit';
-import { z } from 'genkit';
+import { z } from 'zod';
 import { getFirestore } from 'firebase-admin/firestore';
 import { initializeApp, getApps, App, cert } from 'firebase-admin/app';
 import { format, parseISO } from "date-fns";
@@ -57,43 +56,33 @@ const CreateBookingOutputSchema = z.object({
 export type CreateBookingOutput = z.infer<typeof CreateBookingOutputSchema>;
 
 export async function createBooking(input: CreateBookingInput): Promise<CreateBookingOutput> {
-  return createBookingFlow(input);
-}
+  const inputData = CreateBookingInputSchema.parse(input);
+  try {
+    const service = services.find((s) => s.id === inputData.serviceId);
+    if (!service) {
+      throw new Error('Invalid service ID');
+    }
 
-const createBookingFlow = ai.defineFlow(
-  {
-    name: 'createBookingFlow',
-    inputSchema: CreateBookingInputSchema,
-    outputSchema: CreateBookingOutputSchema,
-  },
-  async (inputData) => {
-    try {
-      const service = services.find(s => s.id === inputData.serviceId);
-      if (!service) {
-          throw new Error('Invalid service ID');
-      }
+    const bookingData = {
+      ...inputData,
+      service: {
+        name: service.name,
+        duration: service.duration,
+        price: service.price,
+        bookingFee: service.bookingFee,
+      },
+    };
 
-      const bookingData = {
-        ...inputData,
-        service: { // Reconstruct what's needed for storage and emails
-            name: service.name,
-            duration: service.duration,
-            price: service.price,
-            bookingFee: service.bookingFee,
-        }
-      };
-      
-      const docRef = await db.collection('bookings').add({
-        ...bookingData,
-        createdAt: new Date().toISOString(),
-      });
-      
-      const barberEmail = process.env.BARBER_EMAIL || 'barber@example.com';
-      const bookingDate = format(parseISO(bookingData.date), "EEEE, d MMMM yyyy");
-      const totalCost = bookingData.service.price + bookingData.service.bookingFee;
+    const docRef = await db.collection('bookings').add({
+      ...bookingData,
+      createdAt: new Date().toISOString(),
+    });
 
-      // Email to Client
-      const clientEmailBody = `
+    const barberEmail = process.env.BARBER_EMAIL || 'barber@example.com';
+    const bookingDate = format(parseISO(bookingData.date), 'EEEE, d MMMM yyyy');
+    const totalCost = bookingData.service.price + bookingData.service.bookingFee;
+
+    const clientEmailBody = `
         Hi ${bookingData.name},
 
         Your appointment at Sardar Appointment is confirmed!
@@ -114,8 +103,7 @@ const createBookingFlow = ai.defineFlow(
         Sardar Appointment
       `;
 
-      // Email to Barber
-      const barberEmailBody = `
+    const barberEmailBody = `
         New Booking Notification:
 
         A new appointment has been scheduled.
@@ -135,29 +123,27 @@ const createBookingFlow = ai.defineFlow(
         - WhatsApp Opt-in: ${bookingData.whatsappOptIn ? 'Yes' : 'No'}
       `;
 
-      console.log("--- SIMULATING EMAIL TO CLIENT ---");
-      console.log(`To: ${bookingData.email}`);
-      console.log(`Subject: Your Appointment is Confirmed!`);
-      console.log(`Body: ${clientEmailBody}`);
-      console.log("----------------------------------");
+    console.log('--- SIMULATING EMAIL TO CLIENT ---');
+    console.log(`To: ${bookingData.email}`);
+    console.log(`Subject: Your Appointment is Confirmed!`);
+    console.log(`Body: ${clientEmailBody}`);
+    console.log('----------------------------------');
 
-      console.log("--- SIMULATING EMAIL TO BARBER ---");
-      console.log(`To: ${barberEmail}`);
-      console.log(`Subject: New Booking: ${bookingData.service.name} for ${bookingData.name}`);
-      console.log(`Body: ${barberEmailBody}`);
-      console.log("---------------------------------");
+    console.log('--- SIMULATING EMAIL TO BARBER ---');
+    console.log(`To: ${barberEmail}`);
+    console.log(`Subject: New Booking: ${bookingData.service.name} for ${bookingData.name}`);
+    console.log(`Body: ${barberEmailBody}`);
+    console.log('---------------------------------');
 
-
-      return {
-        bookingId: docRef.id,
-        message: 'Booking created and confirmation prepared for client and barber.',
-      };
-    } catch (error) {
-      console.error('Error in createBookingFlow: ', error);
-      if (error instanceof Error) {
-        throw new Error(`Failed to create booking: ${error.message}`);
-      }
-      throw new Error('Failed to create booking due to an unknown error.');
+    return {
+      bookingId: docRef.id,
+      message: 'Booking created and confirmation prepared for client and barber.',
+    };
+  } catch (error) {
+    console.error('Error in createBooking: ', error);
+    if (error instanceof Error) {
+      throw new Error(`Failed to create booking: ${error.message}`);
     }
+    throw new Error('Failed to create booking due to an unknown error.');
   }
-);
+}
