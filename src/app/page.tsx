@@ -17,7 +17,7 @@ export default function Home() {
         <div className="container mx-auto flex h-20 items-center justify-between px-4 md:px-6">
           <Link href="/" className="flex items-center gap-3" aria-label="Sardar Appointment Home">
             <PhulkariPattern className="w-12 h-12" />
-            <span className="text-xl md:text-2xl font-bold font-headline text-foreground">
+            <span className="text-xl md:text-2xl font-bold font-headline text-foreground tracking-tight">
               Sardar Appointment
             </span>
           </Link>
