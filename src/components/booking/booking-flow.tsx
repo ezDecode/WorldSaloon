@@ -11,6 +11,7 @@ import { TimeSlotSelection } from './timeslot-selection';
 import { UserDetailsForm } from './user-details-form';
 import { BookingConfirmation } from './booking-confirmation';
 import { BookingComplete } from './booking-complete';
+import { createBooking } from '@/ai/flows/create-booking-flow';
 
 const initialBookingState: Booking = {
   service: null,
@@ -31,6 +32,7 @@ const steps = [
 export function BookingFlow() {
   const [step, setStep] = useState(1);
   const [booking, setBooking] = useState<Booking>(initialBookingState);
+  const [isPending, setIsPending] = useState(false);
   const { toast } = useToast();
 
   const handleServiceSelect = (service: Service) => {
@@ -39,7 +41,7 @@ export function BookingFlow() {
   };
 
   const handleTimeSelect = (date: Date, time: string) => {
-    setBooking({ ...booking, date, time });
+    setBooking({ ...booking, date: date.toISOString(), time });
     setStep(3);
   };
 
@@ -48,18 +50,45 @@ export function BookingFlow() {
     setStep(4);
   };
 
-  const handleBookingConfirm = () => {
-    // In a real app, this would be a server action
-    console.log('Booking confirmed:', booking);
-    toast({
-      title: "Booking Confirmed!",
-      description: "Your appointment has been successfully scheduled.",
-    });
-    setStep(5);
+  const handleBookingConfirm = async () => {
+    if (!booking.service || !booking.date || !booking.time) return;
+    setIsPending(true);
+
+    try {
+      const result = await createBooking({
+        service: {
+          id: booking.service.id,
+          name: booking.service.name,
+          duration: booking.service.duration,
+          price: booking.service.price
+        },
+        date: booking.date,
+        time: booking.time,
+        name: booking.name,
+        phone: booking.phone,
+        notes: booking.notes,
+      });
+
+      console.log('Booking confirmed:', result);
+      toast({
+        title: "Booking Confirmed!",
+        description: "Your appointment has been successfully scheduled.",
+      });
+      setStep(5);
+    } catch (error) {
+       console.error("Booking failed", error);
+       toast({
+         variant: "destructive",
+         title: "Booking Failed",
+         description: "We couldn't save your appointment. Please try again.",
+       });
+    } finally {
+        setIsPending(false);
+    }
   };
 
   const handleBack = () => {
-    if (step > 1) {
+    if (step > 1 && !isPending) {
       setStep(step - 1);
     }
   };
@@ -102,7 +131,7 @@ export function BookingFlow() {
             {step === 1 && <ServiceSelection onSelect={handleServiceSelect} />}
             {step === 2 && <TimeSlotSelection onSelect={handleTimeSelect} onBack={handleBack} />}
             {step === 3 && <UserDetailsForm onSubmit={handleUserDetailsSubmit} onBack={handleBack} />}
-            {step === 4 && <BookingConfirmation booking={booking} onConfirm={handleBookingConfirm} onBack={handleBack} />}
+            {step === 4 && <BookingConfirmation booking={booking} isPending={isPending} onConfirm={handleBookingConfirm} onBack={handleBack} />}
             {step === 5 && <BookingComplete booking={booking} onBookAnother={handleReset} />}
           </motion.div>
         </AnimatePresence>

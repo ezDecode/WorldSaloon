@@ -1,7 +1,7 @@
 import type { Booking } from "@/types";
 import { Button } from "@/components/ui/button";
 import { CheckCircle2, Calendar, Clock, IndianRupee } from "lucide-react";
-import { format } from "date-fns";
+import { format, parseISO } from "date-fns";
 
 type Props = {
   booking: Booking;
@@ -19,9 +19,9 @@ export function BookingComplete({ booking, onBookAnother }: Props) {
 
       <div className="bg-muted/50 rounded-lg p-4 text-left w-full space-y-3 mb-8">
         <h3 className="font-bold text-lg">Booking Summary</h3>
-        <p className="flex items-center"><Calendar className="w-4 h-4 mr-2 text-primary"/>{booking.date ? format(booking.date, "EEEE, d MMMM yyyy") : ''} at {booking.time}</p>
-        <p className="flex items-center"><Clock className="w-4 h-4 mr-2 text-primary"/>{booking.service?.duration} minutes</p>
-        <p className="flex items-center"><IndianRupee className="w-4 h-4 mr-2 text-primary"/>{booking.service?.price} (to be paid at the salon)</p>
+        <p className="flex items-center"><Calendar className="w-4 h-4 mr-2 text-primary"/>{booking.date ? format(parseISO(booking.date), "EEEE, d MMMM yyyy") : ''} at {booking.time}</p>
+        <p className="flex items-center"><Clock className="w-4 h-4 mr-2 text-primary"/>{booking.service.duration} minutes</p>
+        <p className="flex items-center"><IndianRupee className="w-4 h-4 mr-2 text-primary"/>{booking.service.price} (to be paid at the salon)</p>
       </div>
       
       <Button onClick={onBookAnother}>

@@ -1,18 +1,27 @@
 import type { Booking } from "@/types";
 import { Button } from "@/components/ui/button";
-import { format } from "date-fns";
-import { ArrowLeft, Calendar, Clock, User, Phone, IndianRupee, Scissors } from "lucide-react";
+import { format, parseISO } from "date-fns";
+import { ArrowLeft, Calendar, Clock, User, Phone, IndianRupee, Scissors, Loader2 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "../ui/card";
 
 type Props = {
   booking: Booking;
+  isPending: boolean;
   onConfirm: () => void;
   onBack: () => void;
 };
 
-export function BookingConfirmation({ booking, onConfirm, onBack }: Props) {
+export function BookingConfirmation({ booking, isPending, onConfirm, onBack }: Props) {
   if (!booking.service || !booking.date || !booking.time) {
-    return <div>Something went wrong. Please start over.</div>;
+    // This should not happen if the flow is correct, but as a fallback:
+    return (
+        <div className="text-center">
+            <p>Something went wrong. Please go back and try again.</p>
+            <Button variant="outline" onClick={onBack} className="mt-4">
+              <ArrowLeft className="mr-2 h-4 w-4" /> Back
+            </Button>
+        </div>
+    );
   }
 
   const { service, date, time, name, phone } = booking;
@@ -31,7 +40,7 @@ export function BookingConfirmation({ booking, onConfirm, onBack }: Props) {
           </div>
           <div className="flex items-center gap-3">
             <Calendar className="w-5 h-5 text-muted-foreground" />
-            <span>{format(date, "EEEE, MMMM do, yyyy")}</span>
+            <span>{format(parseISO(date), "EEEE, MMMM do, yyyy")}</span>
           </div>
            <div className="flex items-center gap-3">
             <Clock className="w-5 h-5 text-muted-foreground" />
@@ -53,11 +62,11 @@ export function BookingConfirmation({ booking, onConfirm, onBack }: Props) {
        </Card>
 
       <div className="flex justify-between mt-8">
-        <Button variant="outline" onClick={onBack}>
+        <Button variant="outline" onClick={onBack} disabled={isPending}>
           <ArrowLeft className="mr-2 h-4 w-4" /> Back
         </Button>
-        <Button onClick={onConfirm}>
-          Book Now
+        <Button onClick={onConfirm} disabled={isPending}>
+          {isPending ? <Loader2 className="animate-spin" /> : "Book Now"}
         </Button>
       </div>
     </div>

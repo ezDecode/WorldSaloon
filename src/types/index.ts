@@ -10,7 +10,7 @@ export type Service = {
 
 export type Booking = {
   service: Service | null;
-  date: Date | null;
+  date: string | null; // Changed from Date to string for serialization
   time: string | null;
   name: string;
   phone: string;
