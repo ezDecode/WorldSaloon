@@ -24,7 +24,11 @@ export default function Home() {
           <nav className="hidden md:flex gap-2 items-center">
             <Button variant="ghost" asChild><a href="#services">Services</a></Button>
             <Button variant="ghost" asChild><a href="#testimonials">Testimonials</a></Button>
-            <Button className="bg-primary hover:bg-primary/90 text-primary-foreground" asChild><Link href="/book">Book Now</Link></Button>
+            <Link href="/book">
+                <Button className="bg-primary hover:bg-primary/90 text-primary-foreground">
+                    Book Now
+                </Button>
+            </Link>
           </nav>
            <div className="md:hidden">
              <Sheet>

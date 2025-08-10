@@ -63,9 +63,11 @@ export function Hero() {
             className="mt-8 flex gap-4 justify-center"
             variants={itemVariants}
           >
-            <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold" asChild>
-              <Link href="/book">Book an Appointment</Link>
-            </Button>
+            <Link href="/book">
+                <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold">
+                    Book an Appointment
+                </Button>
+            </Link>
           </motion.div>
         </div>
       </motion.div>
