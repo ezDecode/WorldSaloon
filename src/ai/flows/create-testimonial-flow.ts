@@ -48,7 +48,11 @@ const createTestimonialFlow = ai.defineFlow(
       console.log('Testimonial created successfully');
     } catch (error) {
       console.error('Error in createTestimonialFlow: ', error);
-      throw new Error('Failed to create testimonial.');
+      // Re-throw a more informative error
+      if (error instanceof Error) {
+        throw new Error(`Failed to create testimonial: ${error.message}`);
+      }
+      throw new Error('Failed to create testimonial due to an unknown error.');
     }
   }
 );
