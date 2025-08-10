@@ -18,3 +18,11 @@ export type Booking = {
   phone: string;
   notes: string;
 };
+
+export type Testimonial = {
+    id: string;
+    name: string;
+    quote: string;
+    createdAt: any;
+    avatarUrl?: string;
+}

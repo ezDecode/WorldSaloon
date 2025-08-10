@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Github, Instagram, Twitter } from 'lucide-react';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { Menu } from 'lucide-react';
+import { FeedbackForm } from '@/components/landing/feedback-form';
 
 export default function Home() {
 
@@ -59,6 +60,18 @@ export default function Home() {
                     </p>
                 </div>
                 <BookingFlow />
+            </div>
+        </section>
+
+        <section id="feedback" className="py-16 md:py-24 bg-secondary/20">
+            <div className="container mx-auto px-4 md:px-6">
+                <div className="text-center mb-12">
+                    <h2 className="text-3xl md:text-4xl font-headline font-bold">Leave a Review</h2>
+                    <p className="text-muted-foreground mt-2 max-w-2xl mx-auto">
+                        Had a great experience? We'd love to hear from you.
+                    </p>
+                </div>
+                <FeedbackForm />
             </div>
         </section>
       </main>

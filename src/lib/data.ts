@@ -27,24 +27,3 @@ export const getAvailableTimeSlots = (date: Date): string[] => {
 
   return slots;
 };
-
-export const testimonialsData = [
-    {
-        id: 1,
-        name: "Rohan S.",
-        quote: "Best haircut I've had in years. The attention to detail is incredible. I felt like a new man walking out of the shop. Highly recommended!",
-        avatarUrl: "https://placehold.co/100x100.png"
-    },
-    {
-        id: 2,
-        name: "Jaspreet K.",
-        quote: "Very professional and clean environment. The barber listened to exactly what I wanted and delivered perfectly. Will definitely be a regular customer.",
-        avatarUrl: "https://placehold.co/100x100.png"
-    },
-    {
-        id: 3,
-        name: "Amanpreet G.",
-        quote: "The booking process was so easy, and the service was even better. Great value for the quality you get. The hot towel shave is a must-try!",
-        avatarUrl: "https://placehold.co/100x100.png"
-    }
-];
