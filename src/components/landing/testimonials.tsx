@@ -6,7 +6,7 @@ import { testimonialsData } from "@/lib/data";
 
 export function Testimonials() {
   return (
-    <section id="testimonials" className="py-16 md:py-24 bg-muted/50">
+    <section id="testimonials" className="py-16 md:py-24 bg-secondary/20">
       <div className="container mx-auto px-4 md:px-6">
         <div className="text-center mb-12">
             <h2 className="text-3xl md:text-4xl font-headline font-bold">What Our Clients Say</h2>
@@ -16,10 +16,10 @@ export function Testimonials() {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {testimonialsData.map((testimonial) => (
-            <Card key={testimonial.id} className="bg-card p-6 shadow-lg">
+            <Card key={testimonial.id} className="bg-secondary/50 border-white/10 p-6 shadow-lg">
               <CardContent className="p-0">
                 <div className="flex items-center mb-4">
-                  <div className="w-14 h-14 rounded-full overflow-hidden mr-4 relative">
+                  <div className="w-14 h-14 rounded-full overflow-hidden mr-4 relative border-2 border-primary">
                     <Image 
                       src={testimonial.avatarUrl} 
                       alt={`Avatar of ${testimonial.name}`} 

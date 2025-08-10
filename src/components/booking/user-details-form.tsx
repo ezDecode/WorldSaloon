@@ -1,67 +1,108 @@
 "use client";
 
-import { useState } from "react";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { ArrowLeft, Mail, Phone, User } from "lucide-react";
+import { ArrowLeft } from "lucide-react";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 
 type Props = {
   onSubmit: (details: { name: string; email: string; phone: string; notes: string }) => void;
   onBack: () => void;
 };
 
-export function UserDetailsForm({ onSubmit, onBack }: Props) {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
-  const [notes, setNotes] = useState("");
-  const [error, setError] = useState("");
+const FormSchema = z.object({
+  name: z.string().min(2, { message: "Name must be at least 2 characters." }),
+  email: z.string().email({ message: "Please enter a valid email." }),
+  phone: z.string().min(10, { message: "Please enter a valid phone number." }),
+  notes: z.string().optional(),
+});
 
-  const handleSubmit = () => {
-    if (!name || !email || !phone) {
-      setError("Please fill in your name, email, and phone number.");
-      return;
-    }
-    // Basic email validation
-    if (!/\S+@\S+\.\S+/.test(email)) {
-      setError("Please enter a valid email address.");
-      return;
-    }
-    setError("");
-    onSubmit({ name, email, phone, notes });
+export function UserDetailsForm({ onSubmit, onBack }: Props) {
+  const form = useForm<z.infer<typeof FormSchema>>({
+    resolver: zodResolver(FormSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      phone: "",
+      notes: "",
+    },
+  });
+
+  const handleFormSubmit = (data: z.infer<typeof FormSchema>) => {
+    onSubmit(data);
   };
 
   return (
-    <div className="max-w-md mx-auto">
-      <div className="space-y-4">
-        <div>
-          <Label htmlFor="name" className="flex items-center gap-2 mb-1"><User className="w-4 h-4"/>Full Name</Label>
-          <Input id="name" value={name} onChange={(e) => setName(e.target.value)} placeholder="e.g. Gurpreet Singh" />
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(handleFormSubmit)} className="max-w-md mx-auto">
+        <div className="space-y-4">
+          <FormField
+            control={form.control}
+            name="name"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Full Name</FormLabel>
+                <FormControl>
+                  <Input placeholder="e.g. Gurpreet Singh" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Email Address</FormLabel>
+                <FormControl>
+                  <Input placeholder="For email notifications" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="phone"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Phone Number</FormLabel>
+                <FormControl>
+                  <Input placeholder="For calls, if needed" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="notes"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Notes (Optional)</FormLabel>
+                <FormControl>
+                  <Textarea placeholder="Any special requests?" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
         </div>
-        <div>
-          <Label htmlFor="email" className="flex items-center gap-2 mb-1"><Mail className="w-4 h-4"/>Email Address</Label>
-          <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="For email notifications" />
+        <div className="flex justify-between mt-8">
+          <Button type="button" variant="outline" onClick={onBack}>
+            <ArrowLeft className="mr-2 h-4 w-4" /> Back
+          </Button>
+          <Button type="submit">
+            Next
+          </Button>
         </div>
-         <div>
-          <Label htmlFor="phone" className="flex items-center gap-2 mb-1"><Phone className="w-4 h-4"/>Phone Number</Label>
-          <Input id="phone" type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="For calls, if needed" />
-        </div>
-        <div>
-          <Label htmlFor="notes">Notes (Optional)</Label>
-          <Textarea id="notes" value={notes} onChange={(e) => setNotes(e.target.value)} placeholder="Any special requests?" />
-        </div>
-      </div>
-      {error && <p className="text-sm text-destructive mt-4">{error}</p>}
-      <div className="flex justify-between mt-8">
-        <Button variant="outline" onClick={onBack}>
-          <ArrowLeft className="mr-2 h-4 w-4" /> Back
-        </Button>
-        <Button onClick={handleSubmit}>
-          Next
-        </Button>
-      </div>
-    </div>
+      </form>
+    </Form>
   );
 }

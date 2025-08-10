@@ -5,28 +5,42 @@ import { Testimonials } from '@/components/landing/testimonials';
 import { PhulkariPattern } from '@/components/phulkari-pattern';
 import { Button } from '@/components/ui/button';
 import { Github, Instagram, Twitter } from 'lucide-react';
+import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { Menu } from 'lucide-react';
 
 export default function Home() {
 
   return (
     <div className="flex flex-col min-h-screen bg-background">
-      <header className="sticky top-0 z-40 w-full bg-background/80 backdrop-blur-sm border-b">
+      <header className="sticky top-0 z-50 w-full bg-background/80 backdrop-blur-sm border-b border-white/10">
         <div className="container mx-auto flex h-20 items-center justify-between px-4 md:px-6">
           <a href="/" className="flex items-center gap-3" aria-label="Sardar Appointment Home">
             <PhulkariPattern className="w-12 h-12" />
-            <span className="text-2xl md:text-3xl font-bold font-headline text-foreground">
+            <span className="text-xl md:text-2xl font-bold font-headline text-foreground">
               Sardar Appointment
             </span>
           </a>
           <nav className="hidden md:flex gap-2 items-center">
             <Button variant="ghost" asChild><a href="#services">Services</a></Button>
             <Button variant="ghost" asChild><a href="#testimonials">Testimonials</a></Button>
-            <Button asChild><a href="#booking">Book Now</a></Button>
+            <Button className="bg-primary/90 hover:bg-primary text-primary-foreground" asChild><a href="#booking">Book Now</a></Button>
           </nav>
            <div className="md:hidden">
-            <Button asChild size="sm">
-              <a href="#booking">Book Now</a>
-            </Button>
+             <Sheet>
+              <SheetTrigger asChild>
+                <Button variant="outline" size="icon">
+                  <Menu />
+                  <span className="sr-only">Open menu</span>
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="right" className="w-[280px] sm:w-[340px]">
+                 <nav className="flex flex-col gap-4 mt-8">
+                   <a href="#services" className="text-lg font-medium hover:underline">Services</a>
+                   <a href="#testimonials" className="text-lg font-medium hover:underline">Testimonials</a>
+                   <a href="#booking" className="text-lg font-medium hover:underline">Book Now</a>
+                 </nav>
+              </SheetContent>
+            </Sheet>
           </div>
         </div>
       </header>
@@ -36,7 +50,7 @@ export default function Home() {
         <ServicesList />
         <Testimonials />
 
-        <section id="booking" className="py-16 md:py-24 bg-muted">
+        <section id="booking" className="py-16 md:py-24 bg-background">
             <div className="container mx-auto px-4 md:px-6">
                  <div className="text-center mb-12">
                     <h2 className="text-3xl md:text-4xl font-headline font-bold">Book Your Slot</h2>
@@ -49,7 +63,7 @@ export default function Home() {
         </section>
       </main>
 
-      <footer className="bg-card text-card-foreground border-t">
+      <footer className="bg-secondary text-secondary-foreground border-t border-white/10">
         <div className="container mx-auto py-8 px-4 md:px-6 flex flex-col md:flex-row justify-between items-center gap-6">
           <div className="text-center md:text-left">
             <h3 className="text-xl font-headline font-bold">Sardar Appointment</h3>

@@ -1,6 +1,5 @@
 import { services } from '@/lib/data';
-import { Check } from 'lucide-react';
-import { Card, CardContent, CardHeader, CardTitle } from '../ui/card';
+import { Card } from '../ui/card';
 
 export function ServicesList() {
   return (
@@ -14,11 +13,11 @@ export function ServicesList() {
         </div>
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
           {services.map((service) => (
-            <Card key={service.id} className="text-center flex flex-col items-center p-6 border-2 hover:border-primary transition-colors duration-300">
+            <Card key={service.id} className="text-center flex flex-col items-center p-6 border-2 border-transparent hover:border-primary transition-colors duration-300 bg-secondary/50">
               <div className="mb-4 bg-primary/10 text-primary p-4 rounded-full">
                 <service.icon className="w-8 h-8" />
               </div>
-              <CardTitle className="font-headline text-xl mb-2">{service.name}</CardTitle>
+              <h3 className="font-headline text-xl mb-2 font-semibold">{service.name}</h3>
               <p className="text-muted-foreground text-sm mb-4">{service.duration} mins</p>
               <p className="text-2xl font-bold mb-4">₹{service.price}</p>
               <p className="text-xs text-muted-foreground">+ ₹{service.bookingFee} booking fee</p>

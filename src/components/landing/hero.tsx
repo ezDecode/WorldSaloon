@@ -1,40 +1,35 @@
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
-import { ArrowDown } from 'lucide-react';
 
 export function Hero() {
   return (
-    <section className="relative bg-background text-foreground py-20 md:py-32">
-        <div className="container mx-auto px-4 md:px-6 grid md:grid-cols-2 gap-8 items-center">
-            <div className="space-y-6 text-center md:text-left">
-                <h1 className="text-4xl md:text-6xl font-headline font-bold leading-tight">
-                    Style, Precision &<br /> a Touch of Tradition.
-                </h1>
-                <p className="text-lg md:text-xl text-muted-foreground max-w-prose">
-                    Experience the finest grooming services in Kapurthala. We combine modern techniques with timeless style to give you the perfect look.
-                </p>
-                <div className="flex gap-4 justify-center md:justify-start">
-                    <Button size="lg" asChild>
-                        <a href="#booking">Book an Appointment</a>
-                    </Button>
-                     <Button size="lg" variant="outline" asChild>
-                        <a href="#services">
-                            Our Services <ArrowDown className="ml-2 h-5 w-5" />
-                        </a>
-                    </Button>
-                </div>
-            </div>
-            <div className="relative h-64 md:h-96 rounded-lg overflow-hidden shadow-2xl">
-                 <Image 
-                    src="https://placehold.co/600x400.png" 
-                    alt="Modern barbershop interior" 
-                    fill
-                    style={{objectFit: 'cover'}}
-                    data-ai-hint="barbershop interior"
-                    className="transform hover:scale-105 transition-transform duration-500 ease-in-out"
-                />
-            </div>
+    <section className="relative bg-black text-white py-20 md:py-32 overflow-hidden">
+      <div className="absolute inset-0 z-0">
+        <Image 
+          src="https://placehold.co/1200x800.png" 
+          alt="Modern barbershop interior" 
+          fill
+          style={{objectFit: 'cover'}}
+          data-ai-hint="barbershop interior dark"
+          className="opacity-20"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-transparent"></div>
+      </div>
+      <div className="container mx-auto px-4 md:px-6 relative z-10">
+        <div className="max-w-3xl text-center mx-auto">
+          <h1 className="text-4xl sm:text-5xl md:text-7xl font-headline font-bold leading-tight">
+            Style, Precision &<br /> a Touch of Tradition.
+          </h1>
+          <p className="mt-6 text-lg md:text-xl text-muted-foreground max-w-prose mx-auto">
+            Experience the finest grooming services in Kapurthala. We combine modern techniques with timeless style to give you the perfect look.
+          </p>
+          <div className="mt-8 flex gap-4 justify-center">
+            <Button size="lg" className="bg-primary/90 hover:bg-primary text-primary-foreground font-bold" asChild>
+              <a href="#booking">Book an Appointment</a>
+            </Button>
+          </div>
         </div>
+      </div>
     </section>
   )
 }
