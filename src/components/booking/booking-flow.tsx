@@ -48,7 +48,7 @@ export function BookingFlow() {
     setStep(3);
   };
 
-  const handleUserDetailsSubmit = (details: { name: string; email: string; phone: string; notes: string; whatsappOptIn?: boolean }) => {
+  const handleUserDetailsSubmit = (details: { name: string; email: string; phone: string; notes?: string; whatsappOptIn?: boolean }) => {
     setBooking({ ...booking, ...details });
     setStep(4);
   };

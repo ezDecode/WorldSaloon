@@ -33,10 +33,12 @@ if (!getApps().length) {
 
 const db = getFirestore();
 
-const CreateTestimonialInputSchema = z.object({
-  name: z.string(),
-  quote: z.string(),
-});
+const CreateTestimonialInputSchema = z
+  .object({
+    name: z.string().min(2),
+    quote: z.string().min(10),
+  })
+  .strict();
 
 export type CreateTestimonialInput = z.infer<typeof CreateTestimonialInputSchema>;
 
@@ -53,7 +55,8 @@ export async function createTestimonial(input: CreateTestimonialInput): Promise<
   } catch (error) {
     console.error('Error in createTestimonial: ', error);
     if (error instanceof Error) {
-      throw new Error(`Failed to create testimonial: ${error.message}`);
+      // Preserve original stack and context
+      throw new Error(`Failed to create testimonial: ${error.message}`, { cause: error });
     }
     throw new Error('Failed to create testimonial due to an unknown error.');
   }

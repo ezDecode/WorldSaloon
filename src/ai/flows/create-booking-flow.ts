@@ -8,7 +8,7 @@
  */
 
 import { z } from 'zod';
-import { getFirestore } from 'firebase-admin/firestore';
+import { getFirestore, FieldValue } from 'firebase-admin/firestore';
 import { initializeApp, getApps, App, cert } from 'firebase-admin/app';
 import { format, parseISO } from "date-fns";
 import 'dotenv/config';
@@ -16,7 +16,7 @@ import { services } from '@/lib/data';
 
 // Initialize Firebase Admin SDK
 if (!getApps().length) {
-  const privateKey = process.env.GOOGLE_PRIVATE_KEY?.replace(/\n/g, '\n');
+  const privateKey = process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, '\n');
   if (process.env.GOOGLE_CLIENT_EMAIL && privateKey) {
     initializeApp({
       credential: cert({
@@ -35,16 +35,28 @@ if (!getApps().length) {
 
 const db = getFirestore();
 
-const CreateBookingInputSchema = z.object({
-  serviceId: z.number(),
-  date: z.string().describe('The date of the appointment in ISO format.'),
-  time: z.string(),
-  name: z.string(),
-  email: z.string(),
-  phone: z.string(),
-  notes: z.string().optional(),
-  whatsappOptIn: z.boolean().optional(),
-});
+const isoDateRegex = /^\d{4}-\d{2}-\d{2}/;
+const timeRegex = /^(?:[01]\d|2[0-3]):[0-5]\d$/;
+
+const CreateBookingInputSchema = z
+  .object({
+    serviceId: z.number().int().nonnegative(),
+    date: z
+      .string()
+      .regex(isoDateRegex, { message: 'date must be in ISO format YYYY-MM-DD' })
+      .describe('The date of the appointment in ISO format.'),
+    time: z
+      .string()
+      .regex(timeRegex, { message: 'time must be in HH:MM (24h) format' }),
+    name: z.string().min(2),
+    email: z.string().email(),
+    phone: z
+      .string()
+      .regex(/^[0-9+()\-\s]{7,20}$/, { message: 'phone must be a valid phone number' }),
+    notes: z.string().max(1000).optional(),
+    whatsappOptIn: z.boolean().optional(),
+  })
+  .strict();
 
 export type CreateBookingInput = z.infer<typeof CreateBookingInputSchema>;
 
@@ -75,7 +87,7 @@ export async function createBooking(input: CreateBookingInput): Promise<CreateBo
 
     const docRef = await db.collection('bookings').add({
       ...bookingData,
-      createdAt: new Date().toISOString(),
+      createdAt: FieldValue.serverTimestamp(),
     });
 
     const barberEmail = process.env.BARBER_EMAIL || 'barber@example.com';
@@ -142,7 +154,8 @@ export async function createBooking(input: CreateBookingInput): Promise<CreateBo
   } catch (error) {
     console.error('Error in createBooking: ', error);
     if (error instanceof Error) {
-      throw new Error(`Failed to create booking: ${error.message}`);
+      // Preserve original stack and context
+      throw new Error(`Failed to create booking: ${error.message}`,{ cause: error });
     }
     throw new Error('Failed to create booking due to an unknown error.');
   }
