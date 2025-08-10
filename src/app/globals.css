@@ -4,7 +4,7 @@
 
 @layer base {
   :root {
-    /* Blueprint color system */
+    /* Optimized Blueprint color system */
     --background: 48 43% 96%; /* Soft beige (#F5F5DC approx) */
     --foreground: 220 15% 15%;
 
@@ -36,8 +36,33 @@
     --radius: 0.75rem;
   }
 
-  .dark {
-    /* Optional dark theme */
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --background: 220 15% 8%;
+      --foreground: 48 43% 96%;
+      
+      --card: 220 15% 10%;
+      --card-foreground: 48 43% 96%;
+      
+      --popover: 220 15% 10%;
+      --popover-foreground: 48 43% 96%;
+      
+      --primary: 30 100% 55%;
+      --primary-foreground: 220 15% 8%;
+      
+      --secondary: 220 15% 15%;
+      --secondary-foreground: 48 43% 96%;
+      
+      --muted: 220 15% 15%;
+      --muted-foreground: 220 10% 55%;
+      
+      --accent: 172 67% 45%;
+      --accent-foreground: 220 15% 8%;
+      
+      --border: 220 15% 20%;
+      --input: 220 15% 20%;
+      --ring: 30 100% 55%;
+    }
   }
 }
 
@@ -45,7 +70,76 @@
   * {
     @apply border-border;
   }
+  
   body {
     @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Focus styles */
+  *:focus-visible {
+    @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-background;
+  }
+
+  /* Reduced motion for accessibility */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer components {
+  /* Custom component styles */
+  .btn-primary {
+    @apply bg-primary text-primary-foreground hover:bg-primary/90 focus:ring-primary;
+  }
+  
+  .gradient-text {
+    @apply bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent;
+  }
+  
+  .section-padding {
+    @apply py-16 md:py-24;
+  }
+  
+  .container-width {
+    @apply w-[90vw] max-w-7xl mx-auto px-4 md:px-6;
+  }
+}
+
+@layer utilities {
+  /* Performance optimizations */
+  .will-change-auto {
+    will-change: auto;
+  }
+  
+  .will-change-scroll {
+    will-change: scroll-position;
+  }
+  
+  .will-change-transform {
+    will-change: transform;
+  }
+  
+  .backface-hidden {
+    backface-visibility: hidden;
+  }
+  
+  .transform-gpu {
+    transform: translateZ(0);
   }
 }

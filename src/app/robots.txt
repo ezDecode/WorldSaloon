@@ -1,4 +1,15 @@
 User-agent: *
 Allow: /
 
-Sitemap: /sitemap.xml
+# Disallow crawling of API routes
+Disallow: /api/
+
+# Disallow crawling of admin pages if any
+Disallow: /admin/
+
+# Allow all other pages
+Allow: /
+Allow: /book
+
+# Sitemap location
+Sitemap: https://sardar-appointment.web.app/sitemap.xml

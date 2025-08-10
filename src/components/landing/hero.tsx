@@ -6,52 +6,111 @@ import Link from 'next/link';
 import { motion } from 'framer-motion';
 
 export function Hero() {
-  const itemVariants = { hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0 } };
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+        delayChildren: 0.1,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: "easeOut",
+      },
+    },
+  };
+
   return (
     <section className="relative bg-background text-foreground py-20 md:py-32 overflow-hidden">
-      <div className="absolute inset-0 z-0 opacity-20">
+      {/* Background Image with Optimizations */}
+      <div className="absolute inset-0 z-0">
         <Image
-          src="https://placehold.co/1600x1000.png"
-          alt="Modern barbershop interior"
+          src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?q=80&w=1600&auto=format&fit=crop"
+          alt="Modern barbershop interior with warm lighting and professional equipment"
           fill
-          style={{ objectFit: 'cover' }}
-          data-ai-hint="barbershop interior warm light"
+          className="object-cover"
+          priority
+          sizes="100vw"
+          quality={85}
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-transparent"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-background/40" />
       </div>
-      <div className="w-[80vw] mx-auto px-4 md:px-6 relative z-10">
-        <div className="max-w-3xl text-center mx-auto">
+
+      <div className="w-[90vw] max-w-7xl mx-auto px-4 md:px-6 relative z-10">
+        <motion.div 
+          className="max-w-4xl text-center mx-auto"
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+        >
           <motion.h1
-            className="text-4xl sm:text-5xl md:text-7xl font-headline font-bold leading-tight"
+            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-headline font-bold leading-tight mb-6"
             variants={itemVariants}
           >
-            Precision Cuts. Warm Hospitality.
+            Style, Precision &{' '}
+            <span className="text-primary">Tradition</span>
           </motion.h1>
+
           <motion.p
-            className="mt-6 text-lg md:text-xl text-muted-foreground max-w-prose mx-auto"
+            className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto mb-8"
             variants={itemVariants}
           >
-            Classic or contemporary, we craft looks that suit you. Book in minutes and pay in-store.
-          </motion.p>
-          <motion.div className="mt-8 flex gap-4 justify-center" variants={itemVariants}>
-            <h1 className="text-4xl sm:text-5xl md:text-7xl font-headline font-bold leading-tight">
-              Style, Precision &<br /> a Touch of Tradition.
-            </h1>
-          </motion.div>
-          <p className="mt-6 text-lg md:text-xl text-muted-foreground max-w-prose mx-auto">
             Experience the finest grooming services in Kapurthala. We combine modern techniques with timeless style to give you the perfect look.
-          </p>
-          <div className="mt-8 flex gap-4 justify-center">
-            <Link href="/book">
-              <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground font-bold">
+          </motion.p>
+
+          <motion.div 
+            className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+            variants={itemVariants}
+          >
+            <Link href="/book" className="w-full sm:w-auto">
+              <Button 
+                size="lg" 
+                className="w-full sm:w-auto bg-primary hover:bg-primary/90 text-primary-foreground font-semibold px-8 py-4 text-lg transition-all duration-200 hover:scale-105"
+              >
                 Book an Appointment
               </Button>
             </Link>
-            <a href="/#services">
-              <Button size="lg" variant="outline">View Services</Button>
+            <a href="/#services" className="w-full sm:w-auto">
+              <Button 
+                size="lg" 
+                variant="outline" 
+                className="w-full sm:w-auto font-semibold px-8 py-4 text-lg border-2 hover:bg-secondary/50 transition-all duration-200"
+              >
+                View Services
+              </Button>
             </a>
-          </div>
-        </div>
+          </motion.div>
+
+          {/* Trust indicators */}
+          <motion.div 
+            className="mt-12 pt-8 border-t border-border/50"
+            variants={itemVariants}
+          >
+            <div className="flex flex-wrap justify-center items-center gap-8 text-sm text-muted-foreground">
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 bg-primary rounded-full" />
+                Expert Barbers
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 bg-primary rounded-full" />
+                Modern Equipment
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 bg-primary rounded-full" />
+                Traditional Hospitality
+              </div>
+            </div>
+          </motion.div>
+        </motion.div>
       </div>
     </section>
   );
