@@ -13,6 +13,6 @@ export type Booking = {
   date: string | null; // Changed from Date to string for serialization
   time: string | null;
   name: string;
-  phone: string;
+  email: string;
   notes: string;
 };

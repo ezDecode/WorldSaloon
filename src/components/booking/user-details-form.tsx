@@ -8,28 +8,28 @@ import { Textarea } from "@/components/ui/textarea";
 import { ArrowLeft } from "lucide-react";
 
 type Props = {
-  onSubmit: (details: { name: string; phone: string; notes: string }) => void;
+  onSubmit: (details: { name: string; email: string; notes: string }) => void;
   onBack: () => void;
 };
 
 export function UserDetailsForm({ onSubmit, onBack }: Props) {
   const [name, setName] = useState("");
-  const [phone, setPhone] = useState("");
+  const [email, setEmail] = useState("");
   const [notes, setNotes] = useState("");
   const [error, setError] = useState("");
 
   const handleSubmit = () => {
-    if (!name || !phone) {
-      setError("Please fill in your name and phone number.");
+    if (!name || !email) {
+      setError("Please fill in your name and email address.");
       return;
     }
-    // Basic phone validation
-    if (!/^\+?[1-9]\d{1,14}$/.test(phone.replace(/\s/g, ''))) {
-      setError("Please enter a valid phone number.");
+    // Basic email validation
+    if (!/\S+@\S+\.\S+/.test(email)) {
+      setError("Please enter a valid email address.");
       return;
     }
     setError("");
-    onSubmit({ name, phone, notes });
+    onSubmit({ name, email, notes });
   };
 
   return (
@@ -40,8 +40,8 @@ export function UserDetailsForm({ onSubmit, onBack }: Props) {
           <Input id="name" value={name} onChange={(e) => setName(e.target.value)} placeholder="e.g. Gurpreet Singh" />
         </div>
         <div>
-          <Label htmlFor="phone">Phone Number</Label>
-          <Input id="phone" type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} placeholder="For WhatsApp notifications" />
+          <Label htmlFor="email">Email Address</Label>
+          <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="For email notifications" />
         </div>
         <div>
           <Label htmlFor="notes">Notes (Optional)</Label>

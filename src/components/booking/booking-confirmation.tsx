@@ -1,7 +1,7 @@
 import type { Booking } from "@/types";
 import { Button } from "@/components/ui/button";
 import { format, parseISO } from "date-fns";
-import { ArrowLeft, Calendar, Clock, User, Phone, IndianRupee, Scissors, Loader2 } from "lucide-react";
+import { ArrowLeft, Calendar, Clock, User, Mail, IndianRupee, Scissors, Loader2 } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "../ui/card";
 
 type Props = {
@@ -24,7 +24,7 @@ export function BookingConfirmation({ booking, isPending, onConfirm, onBack }: P
     );
   }
 
-  const { service, date, time, name, phone } = booking;
+  const { service, date, time, name, email } = booking;
 
   return (
     <div className="max-w-md mx-auto">
@@ -51,8 +51,8 @@ export function BookingConfirmation({ booking, isPending, onConfirm, onBack }: P
             <span>{name}</span>
           </div>
            <div className="flex items-center gap-3">
-            <Phone className="w-5 h-5 text-muted-foreground" />
-            <span>{phone}</span>
+            <Mail className="w-5 h-5 text-muted-foreground" />
+            <span>{email}</span>
           </div>
           <div className="flex items-center gap-3 font-bold">
             <IndianRupee className="w-5 h-5 text-muted-foreground" />

@@ -42,11 +42,6 @@ export default function Home() {
         <Button asChild className="flex-1" size="lg">
           <a href="#booking">Book Now</a>
         </Button>
-        <Button asChild variant="ghost" size="icon" className="text-green-600">
-          <a href={`https://wa.me/${shopPhoneNumber}`} target="_blank" rel="noopener noreferrer" aria-label="Contact on WhatsApp">
-            <MessageCircle className="h-6 w-6" />
-          </a>
-        </Button>
         <Button asChild variant="ghost" size="icon">
           <a href={`tel:${shopPhoneNumber}`} aria-label="Call the shop">
             <Phone className="h-6 w-6" />

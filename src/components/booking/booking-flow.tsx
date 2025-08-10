@@ -18,7 +18,7 @@ const initialBookingState: Booking = {
   date: null,
   time: null,
   name: '',
-  phone: '',
+  email: '',
   notes: '',
 };
 
@@ -45,7 +45,7 @@ export function BookingFlow() {
     setStep(3);
   };
 
-  const handleUserDetailsSubmit = (details: { name: string; phone: string; notes: string }) => {
+  const handleUserDetailsSubmit = (details: { name: string; email: string; notes: string }) => {
     setBooking({ ...booking, ...details });
     setStep(4);
   };
@@ -65,7 +65,7 @@ export function BookingFlow() {
         date: booking.date,
         time: booking.time,
         name: booking.name,
-        phone: booking.phone,
+        email: booking.email,
         notes: booking.notes,
       });
 

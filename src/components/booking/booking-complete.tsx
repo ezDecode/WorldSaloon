@@ -14,7 +14,7 @@ export function BookingComplete({ booking, onBookAnother }: Props) {
       <CheckCircle2 className="w-16 h-16 text-green-500 mb-4" />
       <h2 className="text-2xl font-headline font-bold mb-2">Appointment Booked!</h2>
       <p className="text-muted-foreground mb-6">
-        Thank you, {booking.name}! Your booking is confirmed. You will receive a WhatsApp message shortly.
+        Thank you, {booking.name}! Your booking is confirmed. You will receive an email confirmation shortly.
       </p>
 
       <div className="bg-muted/50 rounded-lg p-4 text-left w-full space-y-3 mb-8">
