@@ -1,25 +1,18 @@
 rules_version = '2';
-
 service cloud.firestore {
   match /databases/{database}/documents {
-
-    // Bookings collection
-    // - Allow anyone to create a new booking (to submit the form)
-    // - Disallow reading the list of all bookings to protect privacy
-    // - Disallow updating or deleting bookings from the client-side
-    match /bookings/{bookingId} {
-      allow read, update, delete: if false;
-      allow create: if true;
+    
+    // Allow anyone to read testimonials
+    match /testimonials/{testimonialId} {
+      allow read: if true;
+      allow write: if true; // Allow anyone to create a testimonial
     }
 
-    // Testimonials collection
-    // - Allow anyone to create a new testimonial
-    // - Allow anyone to read all testimonials to display them on the page
-    // - Disallow updating or deleting to prevent tampering
-    match /testimonials/{testimonialId} {
-      allow read, create: if true;
-      allow update, delete: if false;
+    // Allow anyone to create a booking
+    match /bookings/{bookingId} {
+      allow create: if true;
+      // Further access should be restricted (e.g., only authenticated users or admins)
+      allow read, update, delete: if false; 
     }
   }
 }
-```
