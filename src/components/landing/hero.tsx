@@ -1,9 +1,12 @@
+"use client";
 
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import { motion } from 'framer-motion';
 
 export function Hero() {
+  const itemVariants = { hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0 } };
   return (
     <section className="relative bg-background text-foreground py-20 md:py-32 overflow-hidden">
       <div className="absolute inset-0 z-0 opacity-20">
@@ -30,13 +33,11 @@ export function Hero() {
           >
             Classic or contemporary, we craft looks that suit you. Book in minutes and pay in-store.
           </motion.p>
-          <motion.div
-            className="mt-8 flex gap-4 justify-center"
-            variants={itemVariants}
-          >
-          <h1 className="text-4xl sm:text-5xl md:text-7xl font-headline font-bold leading-tight">
-            Style, Precision &<br /> a Touch of Tradition.
-          </h1>
+          <motion.div className="mt-8 flex gap-4 justify-center" variants={itemVariants}>
+            <h1 className="text-4xl sm:text-5xl md:text-7xl font-headline font-bold leading-tight">
+              Style, Precision &<br /> a Touch of Tradition.
+            </h1>
+          </motion.div>
           <p className="mt-6 text-lg md:text-xl text-muted-foreground max-w-prose mx-auto">
             Experience the finest grooming services in Kapurthala. We combine modern techniques with timeless style to give you the perfect look.
           </p>
@@ -49,7 +50,6 @@ export function Hero() {
             <a href="/#services">
               <Button size="lg" variant="outline">View Services</Button>
             </a>
-          </motion.div>
           </div>
         </div>
       </div>
