@@ -4,10 +4,10 @@ import type { Service } from '@/types';
 import { isBefore, set, startOfDay } from 'date-fns';
 
 export const services: Service[] = [
-  { id: 1, name: "Men's Haircut", duration: 30, price: 250, bookingFee: 25, icon: Scissors },
-  { id: 2, name: "Beard Trim & Shape", duration: 20, price: 150, bookingFee: 25, icon: Sparkles },
-  { id: 3, name: "Haircut & Shave", duration: 50, price: 400, bookingFee: 25, icon: Star },
-  { id: 4, name: "Head Shave", duration: 25, price: 200, bookingFee: 25, icon: User },
+  { id: 1, name: "Classic Men's Cut", duration: 30, price: 299, bookingFee: 25, icon: Scissors },
+  { id: 2, name: "Beard Trim & Shape", duration: 20, price: 199, bookingFee: 25, icon: Sparkles },
+  { id: 3, name: "Cut & Traditional Shave", duration: 50, price: 499, bookingFee: 25, icon: Star },
+  { id: 4, name: "Clean Head Shave", duration: 25, price: 249, bookingFee: 25, icon: User },
 ];
 
 export const getAvailableTimeSlots = (date: Date): string[] => {
@@ -21,7 +21,7 @@ export const getAvailableTimeSlots = (date: Date): string[] => {
   const today = startOfDay(now);
   const selectedDay = startOfDay(date);
   
-  const allSlots = [];
+  const allSlots = [] as string[];
   // Weekday hours: 10 AM to 8 PM
   for (let hour = 10; hour < 20; hour++) {
     allSlots.push(`${hour}:00`);

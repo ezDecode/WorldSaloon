@@ -9,9 +9,10 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { ArrowLeft } from "lucide-react";
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Checkbox } from "@/components/ui/checkbox";
 
 type Props = {
-  onSubmit: (details: { name: string; email: string; phone: string; notes: string }) => void;
+  onSubmit: (details: { name: string; email: string; phone: string; notes: string; whatsappOptIn?: boolean }) => void;
   onBack: () => void;
 };
 
@@ -20,6 +21,7 @@ const FormSchema = z.object({
   email: z.string().email({ message: "Please enter a valid email." }),
   phone: z.string().min(10, { message: "Phone number must be at least 10 digits." }).max(15, { message: "Phone number cannot be more than 15 digits."}),
   notes: z.string().optional(),
+  whatsappOptIn: z.boolean().optional(),
 });
 
 export function UserDetailsForm({ onSubmit, onBack }: Props) {
@@ -30,6 +32,7 @@ export function UserDetailsForm({ onSubmit, onBack }: Props) {
       email: "",
       phone: "",
       notes: "",
+      whatsappOptIn: true,
     },
   });
 
@@ -90,6 +93,21 @@ export function UserDetailsForm({ onSubmit, onBack }: Props) {
                   <Textarea placeholder="Any special requests?" {...field} />
                 </FormControl>
                 <FormMessage />
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name="whatsappOptIn"
+            render={({ field }) => (
+              <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
+                <FormControl>
+                  <Checkbox checked={!!field.value} onCheckedChange={(v) => field.onChange(Boolean(v))} />
+                </FormControl>
+                <div className="space-y-1 leading-none">
+                  <FormLabel>Get WhatsApp reminders and updates</FormLabel>
+                  <p className="text-sm text-muted-foreground">We’ll send confirmations and reminders to your WhatsApp number.</p>
+                </div>
               </FormItem>
             )}
           />

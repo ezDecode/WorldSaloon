@@ -17,7 +17,7 @@ import { services } from '@/lib/data';
 
 // Initialize Firebase Admin SDK
 if (!getApps().length) {
-  const privateKey = process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, '\n');
+  const privateKey = process.env.GOOGLE_PRIVATE_KEY?.replace(/\n/g, '\n');
   if (process.env.GOOGLE_CLIENT_EMAIL && privateKey) {
     initializeApp({
       credential: cert({
@@ -44,6 +44,7 @@ const CreateBookingInputSchema = z.object({
   email: z.string(),
   phone: z.string(),
   notes: z.string().optional(),
+  whatsappOptIn: z.boolean().optional(),
 });
 
 export type CreateBookingInput = z.infer<typeof CreateBookingInputSchema>;
@@ -131,6 +132,7 @@ const createBookingFlow = ai.defineFlow(
         - Time: ${bookingData.time}
         - Duration: ${bookingData.service.duration} minutes
         - Quoted Price: ₹${totalCost}
+        - WhatsApp Opt-in: ${bookingData.whatsappOptIn ? 'Yes' : 'No'}
       `;
 
       console.log("--- SIMULATING EMAIL TO CLIENT ---");

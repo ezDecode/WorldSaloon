@@ -1,20 +1,21 @@
-import { cn } from "@/lib/utils";
+import * as React from 'react';
 
-export function PhulkariPattern({ className }: { className?: string }) {
+type Props = React.SVGProps<SVGSVGElement>;
+
+export function PhulkariPattern(props: Props) {
   return (
-    <div className={cn("w-full h-full relative rounded-full overflow-hidden bg-background", className)}>
-      <svg viewBox="0 0 100 100" className="w-full h-full absolute" preserveAspectRatio="xMidYMid slice">
-        <g transform="translate(50 50) scale(1.1)">
-          <g className="fill-primary/80">
-            <path d="M0-45l13.1 22.7L39.4-4.5l-26.2 18.2L0,36l-13.1-22.7L-39.4,4.5l26.2-18.2z" />
-          </g>
-          <g className="fill-accent/80">
-             <path d="M-26.2-18.2L0-36l26.2,18.2L13.1,22.7L-13.1,22.7L-39.4-4.5z" />
-          </g>
-          <circle cx="0" cy="0" r="10" className="fill-primary" />
-          <circle cx="0" cy="0" r="5" className="fill-background" />
-        </g>
-      </svg>
-    </div>
+    <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" {...props}>
+      <defs>
+        <linearGradient id="g1" x1="0" x2="1" y1="0" y2="1">
+          <stop offset="0%" stopColor="hsl(var(--primary))" stopOpacity="0.9" />
+          <stop offset="100%" stopColor="hsl(var(--accent))" stopOpacity="0.9" />
+        </linearGradient>
+      </defs>
+      <g fill="none" stroke="url(#g1)" strokeWidth="6" strokeLinecap="round">
+        <path d="M50 5 L90 50 L50 95 L10 50 Z" />
+        <path d="M50 18 L78 50 L50 82 L22 50 Z" strokeOpacity="0.7" />
+        <circle cx="50" cy="50" r="8" fill="url(#g1)" />
+      </g>
+    </svg>
   );
 }

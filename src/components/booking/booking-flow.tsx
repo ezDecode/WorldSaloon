@@ -21,6 +21,7 @@ const initialBookingState: Booking = {
   email: '',
   phone: '',
   notes: '',
+  whatsappOptIn: true,
 };
 
 const steps = [
@@ -46,7 +47,7 @@ export function BookingFlow() {
     setStep(3);
   };
 
-  const handleUserDetailsSubmit = (details: { name: string; email: string; phone: string; notes: string }) => {
+  const handleUserDetailsSubmit = (details: { name: string; email: string; phone: string; notes: string; whatsappOptIn?: boolean }) => {
     setBooking({ ...booking, ...details });
     setStep(4);
   };
@@ -64,6 +65,7 @@ export function BookingFlow() {
         email: booking.email,
         phone: booking.phone,
         notes: booking.notes,
+        whatsappOptIn: booking.whatsappOptIn,
       });
 
       console.log('Booking confirmed:', result);

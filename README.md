@@ -4,8 +4,9 @@ This is a modern, responsive web application for a barber shop, built with Next.
 
 ## ✨ Features
 
-- **Modern Landing Page**: A beautiful, single-page design showcasing services and testimonials.
+- **Modern Landing Page**: A beautiful design showcasing services and testimonials, using a warm palette (saffron, beige, teal) and Poppins/PT Sans typography.
 - **Online Booking System**: A multi-step booking flow for a seamless user experience.
+- **WhatsApp Opt-in**: Customers can opt-in to receive WhatsApp reminders after booking, with a quick link on the success screen.
 - **Dynamic Services Display**: Services are displayed in a clean, interactive card layout.
 - **Client Testimonials**: A dedicated section to display customer reviews, fetched dynamically from the database.
 - **Feedback Form**: Allows clients to submit their own testimonials directly on the site.
@@ -22,6 +23,12 @@ This is a modern, responsive web application for a barber shop, built with Next.
 - **Backend Services**: [Firebase](https://firebase.google.com/) (Firestore for database)
 - **AI & Server-Side Logic**: [Genkit (Firebase GenAI)](https://firebase.google.com/docs/genai)
 - **Form Management**: [React Hook Form](https://react-hook-form.com/) & [Zod](https://zod.dev/) for validation
+
+## 🎨 Design System
+
+- **Colors**: Saffron (primary), Soft Beige (background), Teal (accent)
+- **Typography**: Poppins (headlines) and PT Sans (body) via Next Fonts
+- **Components**: ShadCN primitives with gentle elevation, rounded corners, and accessible contrast
 
 ## ⚙️ Getting Started
 
@@ -90,7 +97,7 @@ This is a modern, responsive web application for a barber shop, built with Next.
 │   ├── app                 # Next.js App Router pages
 │   │   ├── book            # Dedicated booking page
 │   │   ├── globals.css     # Global styles and Tailwind directives
-│   │   ├── layout.tsx      # Root layout
+│   │   ├── layout.tsx      # Root layout (fonts, theme)
 │   │   └── page.tsx        # Main landing page
 │   ├── components          # Reusable React components
 │   │   ├── booking         # Components for the booking flow
@@ -119,7 +126,7 @@ The application's backend logic is handled by Genkit flows located in `src/ai/fl
 -   **`create-booking-flow.ts`**:
     -   Receives booking details from the client (service ID, date, time, user info).
     -   Validates the input using a `zod` schema.
-    -   Saves the new booking to the `bookings` collection in Firestore.
+    -   Saves the new booking to the `bookings` collection in Firestore (including WhatsApp opt-in flag).
     -   Simulates sending formatted confirmation emails to both the client and the barber by logging the content to the console.
 
 -   **`create-testimonial-flow.ts`**:
@@ -127,4 +134,3 @@ The application's backend logic is handled by Genkit flows located in `src/ai/fl
     -   Validates the input using `zod`.
     -   Generates a dynamic avatar URL with the user's initial.
     -   Saves the new testimonial to the `testimonials` collection in Firestore.
-```

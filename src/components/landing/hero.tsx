@@ -30,13 +30,13 @@ export function Hero() {
 
   return (
     <section className="relative bg-background text-foreground py-20 md:py-32 overflow-hidden">
-      <div className="absolute inset-0 z-0 opacity-10">
+      <div className="absolute inset-0 z-0 opacity-20">
         <Image
-          src="https://placehold.co/1200x800.png"
+          src="https://placehold.co/1600x1000.png"
           alt="Modern barbershop interior"
           fill
           style={{ objectFit: 'cover' }}
-          data-ai-hint="barbershop interior dark"
+          data-ai-hint="barbershop interior warm light"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-transparent"></div>
       </div>
@@ -51,13 +51,13 @@ export function Hero() {
             className="text-4xl sm:text-5xl md:text-7xl font-headline font-bold leading-tight"
             variants={itemVariants}
           >
-            Style, Precision &<br /> a Touch of Tradition.
+            Precision Cuts. Warm Hospitality.
           </motion.h1>
           <motion.p
             className="mt-6 text-lg md:text-xl text-muted-foreground max-w-prose mx-auto"
             variants={itemVariants}
           >
-            Experience the finest grooming services in Kapurthala. We combine modern techniques with timeless style to give you the perfect look.
+            Classic or contemporary, we craft looks that suit you. Book in minutes and pay in-store.
           </motion.p>
           <motion.div
             className="mt-8 flex gap-4 justify-center"
@@ -68,6 +68,9 @@ export function Hero() {
                     Book an Appointment
                 </Button>
             </Link>
+            <a href="/#services">
+              <Button size="lg" variant="outline">View Services</Button>
+            </a>
           </motion.div>
         </div>
       </motion.div>

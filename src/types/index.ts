@@ -17,6 +17,7 @@ export type Booking = {
   email: string;
   phone: string;
   notes: string;
+  whatsappOptIn?: boolean;
 };
 
 export type Testimonial = {
