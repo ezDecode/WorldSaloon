@@ -10,17 +10,28 @@
 import { ai } from '@/ai/genkit';
 import { z } from 'genkit';
 import { getFirestore } from 'firebase-admin/firestore';
-import { initializeApp, getApps, App } from 'firebase-admin/app';
+import { initializeApp, getApps, App, cert } from 'firebase-admin/app';
 import { format, parseISO } from "date-fns";
 import 'dotenv/config';
 import { services } from '@/lib/data';
 
-
 // Initialize Firebase Admin SDK
 if (!getApps().length) {
-  initializeApp({
-    projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-  });
+  const privateKey = process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, '\n');
+  if (process.env.GOOGLE_CLIENT_EMAIL && privateKey) {
+    initializeApp({
+      credential: cert({
+        projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+        clientEmail: process.env.GOOGLE_CLIENT_EMAIL,
+        privateKey: privateKey,
+      }),
+    });
+  } else {
+    // Fallback for environments where ADC is expected to work
+    initializeApp({
+        projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+    });
+  }
 }
 
 const db = getFirestore();
