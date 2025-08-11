@@ -7,22 +7,22 @@ import { cn } from '@/lib/utils';
 
 const headlineFont = Poppins({
   subsets: ['latin'],
-  weight: ['400','600','700','800'],
+  weight: ['600', '700'],
   variable: '--font-headline',
   display: 'swap',
-  preload: true,
+  preload: false,
 });
 
 const bodyFont = PT_Sans({
   subsets: ['latin'],
-  weight: ['400','700'],
-  style: ['normal','italic'],
+  weight: ['400', '700'],
   variable: '--font-body',
   display: 'swap',
-  preload: true,
+  preload: false,
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://sardar-appointment.web.app'),
   title: {
     default: 'Sardar Appointment | Best Barbershop in Kapurthala, Punjab',
     template: '%s | Sardar Appointment'

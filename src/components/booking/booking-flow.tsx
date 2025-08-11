@@ -100,45 +100,54 @@ export function BookingFlow() {
     setBooking(initialBookingState);
     setStep(1);
   };
-  
-  const currentStepInfo = steps.find(s => s.id === step);
-  const totalSteps = steps.length + 1;
 
-  const motionVariants = {
-    initial: { opacity: 0, x: 50 },
-    animate: { opacity: 1, x: 0 },
-    exit: { opacity: 0, x: -50 },
+  const renderStep = () => {
+    switch (step) {
+      case 1:
+        return <ServiceSelection onSelect={handleServiceSelect} />;
+      case 2:
+        return <TimeSlotSelection onSelect={handleTimeSelect} onBack={handleBack} />;
+      case 3:
+        return <UserDetailsForm onSubmit={handleUserDetailsSubmit} onBack={handleBack} />;
+      case 4:
+        return <BookingConfirmation booking={booking} onConfirm={handleBookingConfirm} onBack={handleBack} isPending={isPending} />;
+      case 5:
+        return <BookingComplete booking={booking} onBookAnother={handleReset} />;
+      default:
+        return null;
+    }
   };
 
   return (
-    <Card className="w-full max-w-4xl mx-auto shadow-xl overflow-hidden">
-      <CardHeader>
-        {step <= steps.length && currentStepInfo && (
-          <>
-            <ProgressBar currentStep={step} totalSteps={totalSteps} />
-            <CardTitle className="font-headline text-2xl">{currentStepInfo.title}</CardTitle>
-            <CardDescription>{currentStepInfo.description}</CardDescription>
-          </>
-        )}
-      </CardHeader>
-      <CardContent className="min-h-[400px]">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={step}
-            variants={motionVariants}
-            initial="initial"
-            animate="animate"
-            exit="exit"
-            transition={{ duration: 0.3 }}
-          >
-            {step === 1 && <ServiceSelection onSelect={handleServiceSelect} />}
-            {step === 2 && <TimeSlotSelection onSelect={handleTimeSelect} onBack={handleBack} />}
-            {step === 3 && <UserDetailsForm onSubmit={handleUserDetailsSubmit} onBack={handleBack} />}
-            {step === 4 && <BookingConfirmation booking={booking} isPending={isPending} onConfirm={handleBookingConfirm} onBack={handleBack} />}
-            {step === 5 && <BookingComplete booking={booking} onBookAnother={handleReset} />}
-          </motion.div>
-        </AnimatePresence>
-      </CardContent>
-    </Card>
+    <div className="max-w-4xl mx-auto">
+      <div className="mb-8">
+        <ProgressBar currentStep={step} totalSteps={4} />
+      </div>
+
+      <Card className="border-0 shadow-lg">
+        <CardHeader className="text-center pb-6">
+          <CardTitle className="text-2xl md:text-3xl font-headline">
+            {steps[step - 1]?.title}
+          </CardTitle>
+          <CardDescription className="text-lg text-muted-foreground">
+            {steps[step - 1]?.description}
+          </CardDescription>
+        </CardHeader>
+
+        <CardContent className="px-6 pb-8">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={step}
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -20 }}
+              transition={{ duration: 0.2 }}
+            >
+              {renderStep()}
+            </motion.div>
+          </AnimatePresence>
+        </CardContent>
+      </Card>
+    </div>
   );
 }

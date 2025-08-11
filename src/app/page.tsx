@@ -1,11 +1,27 @@
 
 import type { Metadata } from 'next';
-import { Hero } from '@/components/landing/hero';
-import { ServicesList } from '@/components/landing/services-list';
-import { SiteHeader } from '@/components/landing/site-header';
-import { SiteFooter } from '@/components/landing/site-footer';
-import { ClientToaster } from '@/components/client-toaster';
-import { TestimonialsClient, FeedbackFormClient } from '@/components/client-dynamic';
+import dynamic from 'next/dynamic';
+
+// Dynamic imports for better code splitting
+const Hero = dynamic(() => import('@/components/landing/hero').then(m => ({ default: m.Hero })), {
+  loading: () => <div className="h-96 bg-muted animate-pulse rounded-lg" />
+});
+
+const ServicesList = dynamic(() => import('@/components/landing/services-list').then(m => ({ default: m.ServicesList })), {
+  loading: () => <div className="h-64 bg-muted animate-pulse rounded-lg" />
+});
+
+const SiteHeader = dynamic(() => import('@/components/landing/site-header').then(m => ({ default: m.SiteHeader })), {
+  loading: () => <div className="h-16 bg-muted animate-pulse rounded-lg" />
+});
+
+const SiteFooter = dynamic(() => import('@/components/landing/site-footer').then(m => ({ default: m.SiteFooter })), {
+  loading: () => <div className="h-32 bg-muted animate-pulse rounded-lg" />
+});
+
+const ClientToaster = dynamic(() => import('@/components/client-toaster').then(m => ({ default: m.ClientToaster })));
+const TestimonialsClient = dynamic(() => import('@/components/client-dynamic').then(m => ({ default: m.TestimonialsClient })));
+const FeedbackFormClient = dynamic(() => import('@/components/client-dynamic').then(m => ({ default: m.FeedbackFormClient })));
 
 export const metadata: Metadata = {
   title: 'Best Barbershop in Kapurthala | Expert Grooming Services',
