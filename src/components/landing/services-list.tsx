@@ -14,7 +14,7 @@ export function ServicesList() {
       opacity: 1,
       transition: {
         staggerChildren: 0.1,
-        delayChildren: 0.2,
+        delayChildren: 0.1,
       },
     },
   };
@@ -25,7 +25,7 @@ export function ServicesList() {
       opacity: 1,
       y: 0,
       transition: {
-        duration: 0.5,
+        duration: 0.3,
         ease: "easeOut",
       },
     },
@@ -39,7 +39,7 @@ export function ServicesList() {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.4 }}
         >
           <h2 className="text-3xl md:text-4xl font-headline font-bold mb-4">
             Our Premium Services
@@ -59,13 +59,9 @@ export function ServicesList() {
           {services.map((service) => (
             <motion.div key={service.id} variants={itemVariants}>
               <Card className="group text-center flex flex-col items-center p-6 border-2 border-transparent hover:border-primary/60 hover:shadow-xl transition-all duration-300 bg-card/80 backdrop-blur-sm h-full">
-                <motion.div 
-                  className="mb-4 bg-primary/10 text-primary p-4 rounded-full group-hover:bg-primary group-hover:text-white transition-colors duration-300"
-                  whileHover={{ scale: 1.1 }}
-                  transition={{ type: "spring", stiffness: 400, damping: 10 }}
-                >
+                <div className="mb-4 bg-primary/10 text-primary p-4 rounded-full group-hover:bg-primary group-hover:text-white transition-colors duration-300">
                   <service.icon className="w-8 h-8" />
-                </motion.div>
+                </div>
 
                 <h3 className="font-headline text-xl mb-3 font-semibold group-hover:text-primary transition-colors duration-300">
                   {service.name}
@@ -98,23 +94,6 @@ export function ServicesList() {
               </Card>
             </motion.div>
           ))}
-        </motion.div>
-
-        <motion.div 
-          className="text-center mt-12"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: 0.5, duration: 0.6 }}
-        >
-          <p className="text-sm text-muted-foreground mb-4">
-            All services include complimentary consultation and styling advice
-          </p>
-          <Link href="/book">
-            <Button size="lg" className="bg-primary hover:bg-primary/90 text-white font-semibold">
-              Book Multiple Services
-            </Button>
-          </Link>
         </motion.div>
       </div>
     </section>

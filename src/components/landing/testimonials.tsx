@@ -6,7 +6,6 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Star } from "lucide-react";
 import { useEffect, useState } from "react";
 import type { Testimonial } from "@/types";
-import { Skeleton } from "../ui/skeleton";
 
 export function Testimonials() {
   const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
@@ -29,6 +28,24 @@ export function Testimonials() {
     fetchTestimonials();
   }, []);
 
+  if (loading) {
+    return (
+      <section id="testimonials" className="py-16 md:py-24 bg-secondary/30">
+        <div className="w-[80vw] mx-auto px-4 md:px-6">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-headline font-bold">What Our Clients Say</h2>
+            <p className="text-muted-foreground mt-2">
+              We take pride in our work, and our clients agree!
+            </p>
+          </div>
+          <div className="text-center">
+            <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section id="testimonials" className="py-16 md:py-24 bg-secondary/30">
       <div className="w-[80vw] mx-auto px-4 md:px-6">
@@ -39,29 +56,13 @@ export function Testimonials() {
             </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {loading && Array.from({ length: 3 }).map((_, i) => (
-             <Card key={i} className="bg-background border p-6 shadow-sm">
-               <CardContent className="p-0">
-                  <div className="flex items-center mb-4">
-                    <Skeleton className="w-14 h-14 rounded-full mr-4" />
-                    <div className="space-y-2">
-                      <Skeleton className="h-4 w-[150px]" />
-                      <Skeleton className="h-4 w-[100px]" />
-                    </div>
-                  </div>
-                  <Skeleton className="h-4 w-full mt-2" />
-                  <Skeleton className="h-4 w-full mt-2" />
-                  <Skeleton className="h-4 w-3/4 mt-2" />
-               </CardContent>
-             </Card>
-          ))}
-          {!loading && testimonials.map((testimonial) => (
+          {testimonials.map((testimonial) => (
             <Card key={testimonial.id} className="bg-background border p-6 shadow-sm hover:border-accent/60 transition-colors">
               <CardContent className="p-0">
                 <div className="flex items-center mb-4">
                   <div className="w-14 h-14 rounded-full overflow-hidden mr-4 relative border-2 border-primary/70">
                     <Image 
-                      src={testimonial.avatarUrl || "https://placehold.co/100x100.png"} 
+                      src={testimonial.avatarUrl || "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop&crop=face"} 
                       alt={`Avatar of ${testimonial.name}`} 
                       fill
                       style={{objectFit: 'cover'}}
