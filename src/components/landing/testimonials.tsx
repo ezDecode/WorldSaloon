@@ -2,7 +2,7 @@
 "use client";
 
 import Image from "next/image";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, Skeleton } from "@/components/ui/master";
 import { Star } from "lucide-react";
 import { useEffect, useState } from "react";
 import type { Testimonial } from "@/types";

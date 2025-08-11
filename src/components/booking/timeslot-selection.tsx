@@ -2,8 +2,7 @@
 
 import { useState, useMemo, useEffect } from "react";
 import { getAvailableTimeSlots } from "@/lib/data";
-import { Button } from "@/components/ui/button";
-import { Calendar } from "@/components/ui/calendar";
+import { Button, Calendar } from "@/components/ui/master";
 import { addDays, format, isBefore, startOfDay } from "date-fns";
 import { ArrowLeft, Calendar as CalendarIcon } from "lucide-react";
 
