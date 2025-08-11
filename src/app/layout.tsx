@@ -4,6 +4,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { Poppins, PT_Sans } from 'next/font/google';
 import { cn } from '@/lib/utils';
 
+
 const headlineFont = Poppins({
   subsets: ['latin'],
   weight: ['600', '700'],

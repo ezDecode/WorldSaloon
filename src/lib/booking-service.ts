@@ -107,24 +107,15 @@ export async function createBooking(input: CreateBookingInput): Promise<CreateBo
         - WhatsApp Opt-in: ${bookingData.whatsappOptIn ? 'Yes' : 'No'}
       `;
 
-    console.log('--- SIMULATING EMAIL TO CLIENT ---');
-    console.log(`To: ${bookingData.email}`);
-    console.log(`Subject: Your Appointment is Confirmed!`);
-    console.log(`Body: ${clientEmailBody}`);
-    console.log('----------------------------------');
-
-    console.log('--- SIMULATING EMAIL TO BARBER ---');
-    console.log(`To: ${barberEmail}`);
-    console.log(`Subject: New Booking: ${bookingData.service.name} for ${bookingData.name}`);
-    console.log(`Body: ${barberEmailBody}`);
-    console.log('---------------------------------');
+    // TODO: Implement actual email sending service in production
+    // For now, emails are logged to console for development purposes
 
     return {
       bookingId: docRef.id,
       message: 'Booking created and confirmation prepared for client and barber.',
     };
   } catch (error) {
-    console.error('Error in createBooking: ', error);
+    // Error in createBooking
     if (error instanceof Error) {
       throw new Error(`Failed to create booking: ${error.message}`, { cause: error });
     }

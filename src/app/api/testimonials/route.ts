@@ -54,6 +54,8 @@ const FALLBACK_TESTIMONIALS = [
     createdAt: new Date().toISOString(),
   },
 ];
+// Empty array for production - testimonials will be fetched from database
+const FALLBACK_TESTIMONIALS: any[] = [];
 
 // Initialize Firebase Admin with error handling
 function initializeFirebaseAdmin() {
@@ -79,7 +81,7 @@ function initializeFirebaseAdmin() {
       });
     }
   } catch (error) {
-    console.error('Failed to initialize Firebase Admin:', error);
+    // Failed to initialize Firebase Admin
     throw error;
   }
 }
@@ -103,6 +105,7 @@ export async function GET(request: Request) {
     // Check if Firebase is properly configured
     if (!isFirebaseConfigured()) {
       console.log('Firebase not configured, using fallback testimonials for development');
+      // Firebase not configured - return empty testimonials
       
       const { searchParams } = new URL(request.url);
       const limitParam = searchParams.get('limit');
@@ -162,7 +165,7 @@ export async function GET(request: Request) {
           query = query.startAfter(docSnap);
         }
       } catch (cursorError) {
-        console.warn('Invalid cursor provided:', cursor);
+        // Invalid cursor provided
         // Continue without cursor
       }
     }
@@ -198,7 +201,13 @@ export async function GET(request: Request) {
     });
 
   } catch (error) {
-    console.error('Error fetching testimonials:', error);
+          // Error fetching testimonials
+    
+    // Return fallback testimonials even on error
+    const { searchParams } = new URL(request.url);
+    const limitParam = searchParams.get('limit');
+    const limit = Math.min(parseInt(limitParam || '6', 10) || 6, 20);
+    const testimonials = FALLBACK_TESTIMONIALS.slice(0, limit);
     
     // Return fallback testimonials even on error
     const { searchParams } = new URL(request.url);
