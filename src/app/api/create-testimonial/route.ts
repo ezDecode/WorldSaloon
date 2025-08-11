@@ -16,7 +16,7 @@ export async function POST(request: Request) {
     await createTestimonial(input);
     return NextResponse.json({ ok: true }, { status: 200 });
   } catch (error) {
-    console.error('Error in create-testimonial route:', error);
+    // Error in create-testimonial route
     if (error && typeof error === 'object' && 'issues' in (error as any)) {
       return NextResponse.json({ error: 'Invalid request', details: (error as any).issues }, { status: 400 });
     }

@@ -3,7 +3,7 @@ import './globals.css';
 import { Toaster } from "@/components/ui/toaster";
 import { Poppins, PT_Sans } from 'next/font/google';
 import { cn } from '@/lib/utils';
-import { PerformanceMonitor } from '@/components/performance-monitor';
+
 
 const headlineFont = Poppins({
   subsets: ['latin'],
@@ -94,7 +94,6 @@ export default function RootLayout({
           {children}
         </div>
         <Toaster />
-        <PerformanceMonitor />
       </body>
     </html>
   );
