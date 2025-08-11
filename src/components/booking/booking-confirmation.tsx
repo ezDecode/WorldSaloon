@@ -1,8 +1,7 @@
 import type { Booking } from "@/types";
-import { Button } from "@/components/ui/button";
+import { Button, Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/master";
 import { format, parseISO } from "date-fns";
 import { ArrowLeft, Calendar, Clock, User, Mail, IndianRupee, Scissors, Loader2, Phone, MessageCircle } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "../ui/card";
 
 type Props = {
   booking: Booking;

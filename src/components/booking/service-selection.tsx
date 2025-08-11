@@ -1,7 +1,6 @@
 import { services } from "@/lib/data";
 import type { Service } from "@/types";
-import { Button } from "@/components/ui/button";
-import { Card, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
+import { Button, Card, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/master";
 import { Clock, IndianRupee, Plus } from "lucide-react";
 
 type Props = {

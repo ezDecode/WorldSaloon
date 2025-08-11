@@ -25,7 +25,7 @@ export async function POST(request: Request) {
     const result = await createBooking(input);
     return NextResponse.json(result, { status: 200 });
   } catch (error) {
-    console.error('Error in create-booking route:', error);
+    // Error in create-booking route
     if (error && typeof error === 'object' && 'issues' in (error as any)) {
       return NextResponse.json({ error: 'Invalid request', details: (error as any).issues }, { status: 400 });
     }

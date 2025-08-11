@@ -3,13 +3,8 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
+import { Button, Input, Label, Textarea, Form, FormControl, FormField, FormItem, FormLabel, FormMessage, Checkbox } from "@/components/ui/master";
 import { ArrowLeft } from "lucide-react";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Checkbox } from "@/components/ui/checkbox";
 
 type Props = {
   onSubmit: (details: { name: string; email: string; phone: string; notes?: string; whatsappOptIn?: boolean }) => void;

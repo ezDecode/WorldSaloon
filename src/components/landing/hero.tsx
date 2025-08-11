@@ -4,17 +4,14 @@ import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { useState } from 'react';
 
 export function Hero() {
-  const [imageError, setImageError] = useState(false);
-  
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
       transition: {
-        staggerChildren: 0.2,
+        staggerChildren: 0.1,
         delayChildren: 0.1,
       },
     },
@@ -26,30 +23,24 @@ export function Hero() {
       opacity: 1, 
       y: 0,
       transition: {
-        duration: 0.6,
+        duration: 0.4,
         ease: "easeOut",
       },
     },
   };
-
-  // Fallback to a more reliable image source
-  const imageSource = imageError 
-    ? "https://picsum.photos/1600/1200?random=barbershop" 
-    : "https://images.unsplash.com/photo-1585747860715-2ba37e788b70?q=80&w=1600&auto=format&fit=crop";
 
   return (
     <section className="relative bg-background text-foreground py-20 md:py-32 overflow-hidden">
       {/* Background Image with Optimizations */}
       <div className="absolute inset-0 z-0">
         <Image
-          src={imageSource}
+          src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?q=80&w=1600&auto=format&fit=crop"
           alt="Modern barbershop interior with warm lighting and professional equipment"
           fill
           className="object-cover"
           priority
           sizes="100vw"
-          quality={85}
-          onError={() => setImageError(true)}
+          quality={75}
           placeholder="blur"
           blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAv/xAAhEAACAQMDBQAAAAAAAAAAAAABAgMABAUGIWGRkqGx0f/EABUBAQEAAAAAAAAAAAAAAAAAAAMF/8QAGhEAAgIDAAAAAAAAAAAAAAAAAAECEgMRkf/aAAwDAQACEQMRAD8AltJagyeH0AthI5xdrLcNM91BF5pX2HaH9bcfaSXWGaRmknyAgQtlD4Ol7wNnAA6DvZIIIUDCTYwAA8MdD2FQZIB1rTr+P//Z"
         />
@@ -99,27 +90,6 @@ export function Hero() {
                 View Services
               </Button>
             </a>
-          </motion.div>
-
-          {/* Trust indicators */}
-          <motion.div 
-            className="mt-12 pt-8 border-t border-border/50"
-            variants={itemVariants}
-          >
-            <div className="flex flex-wrap justify-center items-center gap-8 text-sm text-muted-foreground">
-              <div className="flex items-center gap-2">
-                <span className="w-2 h-2 bg-primary rounded-full" />
-                Expert Barbers
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="w-2 h-2 bg-primary rounded-full" />
-                Modern Equipment
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="w-2 h-2 bg-primary rounded-full" />
-                Traditional Hospitality
-              </div>
-            </div>
           </motion.div>
         </motion.div>
       </div>
