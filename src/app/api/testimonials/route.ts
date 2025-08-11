@@ -3,6 +3,57 @@ import { z } from 'zod';
 import { getFirestore } from 'firebase-admin/firestore';
 import { initializeApp, getApps, cert } from 'firebase-admin/app';
 
+// Fallback testimonials for development
+const FALLBACK_TESTIMONIALS = [
+  {
+    id: 'dev-1',
+    name: 'Rajinder Singh',
+    quote: 'Excellent service! The barber really knows how to style Punjabi beards perfectly.',
+    avatarUrl: 'https://api.dicebear.com/7.x/avataaars/svg?seed=rajinder',
+    rating: 5,
+    createdAt: new Date().toISOString(),
+  },
+  {
+    id: 'dev-2',
+    name: 'Manpreet Kaur',
+    quote: 'My husband always comes back looking amazing. Great attention to detail!',
+    avatarUrl: 'https://api.dicebear.com/7.x/avataaars/svg?seed=manpreet',
+    rating: 5,
+    createdAt: new Date().toISOString(),
+  },
+  {
+    id: 'dev-3',
+    name: 'Hardeep Sharma',
+    quote: 'Best barbershop in Kapurthala! Professional service and great atmosphere.',
+    avatarUrl: 'https://api.dicebear.com/7.x/avataaars/svg?seed=hardeep',
+    rating: 5,
+    createdAt: new Date().toISOString(),
+  },
+  {
+    id: 'dev-4',
+    name: 'Gurpreet Singh',
+    quote: 'Traditional techniques with modern style. Highly recommend!',
+    avatarUrl: 'https://api.dicebear.com/7.x/avataaars/svg?seed=gurpreet',
+    rating: 5,
+    createdAt: new Date().toISOString(),
+  },
+  {
+    id: 'dev-5',
+    name: 'Simran Kaur',
+    quote: 'My family has been coming here for years. Always satisfied with the service.',
+    avatarUrl: 'https://api.dicebear.com/7.x/avataaars/svg?seed=simran',
+    rating: 5,
+    createdAt: new Date().toISOString(),
+  },
+  {
+    id: 'dev-6',
+    name: 'Jasbir Singh',
+    quote: 'Perfect beard trim every time. The barber understands Sikh grooming traditions.',
+    avatarUrl: 'https://api.dicebear.com/7.x/avataaars/svg?seed=jasbir',
+    rating: 5,
+    createdAt: new Date().toISOString(),
+  },
+];
 // Empty array for production - testimonials will be fetched from database
 const FALLBACK_TESTIMONIALS: any[] = [];
 
@@ -53,6 +104,7 @@ export async function GET(request: Request) {
   try {
     // Check if Firebase is properly configured
     if (!isFirebaseConfigured()) {
+      console.log('Firebase not configured, using fallback testimonials for development');
       // Firebase not configured - return empty testimonials
       
       const { searchParams } = new URL(request.url);
@@ -150,6 +202,12 @@ export async function GET(request: Request) {
 
   } catch (error) {
           // Error fetching testimonials
+    
+    // Return fallback testimonials even on error
+    const { searchParams } = new URL(request.url);
+    const limitParam = searchParams.get('limit');
+    const limit = Math.min(parseInt(limitParam || '6', 10) || 6, 20);
+    const testimonials = FALLBACK_TESTIMONIALS.slice(0, limit);
     
     // Return fallback testimonials even on error
     const { searchParams } = new URL(request.url);
