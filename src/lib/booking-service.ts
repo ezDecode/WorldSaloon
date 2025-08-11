@@ -1,39 +1,10 @@
 'use server';
-/**
- * @fileOverview A flow for creating a booking in Firestore and sending a confirmation.
- *
- * - createBooking - A function that handles creating a new booking.
- * - CreateBookingInput - The input type for the createBooking function.
- * - CreateBookingOutput - The return type for the createBooking function.
- */
 
 import { z } from 'zod';
-import { getFirestore, FieldValue } from 'firebase-admin/firestore';
-import { initializeApp, getApps, App, cert } from 'firebase-admin/app';
+import { FieldValue } from 'firebase-admin/firestore';
 import { format, parseISO } from "date-fns";
-import 'dotenv/config';
+import { db } from '@/lib/firebase-admin';
 import { services } from '@/lib/data';
-
-// Initialize Firebase Admin SDK
-if (!getApps().length) {
-  const privateKey = process.env.GOOGLE_PRIVATE_KEY?.replace(/\\n/g, '\n');
-  if (process.env.GOOGLE_CLIENT_EMAIL && privateKey) {
-    initializeApp({
-      credential: cert({
-        projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-        clientEmail: process.env.GOOGLE_CLIENT_EMAIL,
-        privateKey: privateKey,
-      }),
-    });
-  } else {
-    // Fallback for environments where ADC is expected to work
-    initializeApp({
-        projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-    });
-  }
-}
-
-const db = getFirestore();
 
 const isoDateRegex = /^\d{4}-\d{2}-\d{2}/;
 const timeRegex = /^(?:[01]\d|2[0-3]):[0-5]\d$/;
@@ -69,6 +40,7 @@ export type CreateBookingOutput = z.infer<typeof CreateBookingOutputSchema>;
 
 export async function createBooking(input: CreateBookingInput): Promise<CreateBookingOutput> {
   const inputData = CreateBookingInputSchema.parse(input);
+  
   try {
     const service = services.find((s) => s.id === inputData.serviceId);
     if (!service) {
@@ -154,8 +126,7 @@ export async function createBooking(input: CreateBookingInput): Promise<CreateBo
   } catch (error) {
     console.error('Error in createBooking: ', error);
     if (error instanceof Error) {
-      // Preserve original stack and context
-      throw new Error(`Failed to create booking: ${error.message}`,{ cause: error });
+      throw new Error(`Failed to create booking: ${error.message}`, { cause: error });
     }
     throw new Error('Failed to create booking due to an unknown error.');
   }

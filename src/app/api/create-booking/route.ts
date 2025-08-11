@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
-import { createBooking } from '@/ai/flows/create-booking-flow';
+import { createBooking } from '@/lib/booking-service';
 
 const isoDateRegex = /^\d{4}-\d{2}-\d{2}/;
 const timeRegex = /^(?:[01]\d|2[0-3]):[0-5]\d$/;

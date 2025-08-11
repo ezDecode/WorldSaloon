@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
-import { createTestimonial } from '@/ai/flows/create-testimonial-flow';
+import { createTestimonial } from '@/lib/testimonial-service';
 
 const CreateTestimonialInputSchema = z
   .object({
