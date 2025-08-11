@@ -1,5 +1,5 @@
 
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/master";
 import { Github, Instagram, Twitter } from "lucide-react";
 
 export function SiteFooter() {

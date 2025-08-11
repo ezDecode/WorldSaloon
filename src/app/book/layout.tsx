@@ -1,6 +1,6 @@
 
 import { PhulkariPattern } from "@/components/phulkari-pattern";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/master";
 import { SiteFooter } from "@/components/landing/site-footer";
 import Link from 'next/link';
 

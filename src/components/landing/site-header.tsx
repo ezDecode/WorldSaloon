@@ -3,8 +3,7 @@
 
 import Link from "next/link";
 import { PhulkariPattern } from "@/components/phulkari-pattern";
-import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
+import { Button, Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/master";
 import { Menu } from 'lucide-react';
 
 export function SiteHeader() {

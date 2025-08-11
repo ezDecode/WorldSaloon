@@ -1,5 +1,5 @@
 import type { Booking } from "@/types";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/master";
 import { CheckCircle2, Calendar, Clock, IndianRupee } from "lucide-react";
 import { format, parseISO } from "date-fns";
 
