@@ -11,7 +11,7 @@ This is a modern, responsive web application for a barber shop, built with Next.
 - **Client Testimonials**: A dedicated section to display customer reviews, fetched dynamically from the database.
 - **Feedback Form**: Allows clients to submit their own testimonials directly on the site.
 - **Email Notifications**: Automatically prepares formatted email confirmations for both the client and the barber upon successful booking.
-- **Secure by Design**: Utilizes Firebase Security Rules to protect user data and Genkit flows with input validation.
+- **Secure by Design**: Utilizes Firebase Security Rules to protect user data and server-side functions with input validation.
 - **Fully Responsive**: Looks and works great on all devices, from mobile phones to desktops.
 
 ## 🚀 Tech Stack
@@ -21,7 +21,7 @@ This is a modern, responsive web application for a barber shop, built with Next.
 - **UI Components**: [ShadCN UI](https://ui.shadcn.com/)
 - **Animations**: [Framer Motion](https://www.framer.com/motion/)
 - **Backend Services**: [Firebase](https://firebase.google.com/) (Firestore for database)
-- **AI & Server-Side Logic**: [Genkit (Firebase GenAI)](https://firebase.google.com/docs/genai)
+- **Server-Side Logic**: Next.js API Routes with [Zod](https://zod.dev/) validation
 - **Form Management**: [React Hook Form](https://react-hook-form.com/) & [Zod](https://zod.dev/) for validation
 
 ## 🎨 Design System
@@ -77,12 +77,6 @@ This is a modern, responsive web application for a barber shop, built with Next.
     ```
     This will start the Next.js development server, usually on `http://localhost:3000`.
 
--   **Genkit Development Server**:
-    For developing and testing Genkit flows, run the Genkit dev server in a separate terminal:
-    ```bash
-    npm run genkit:dev
-    ```
-
 -   **Production Build**:
     ```bash
     npm run build
@@ -103,11 +97,12 @@ This is a modern, responsive web application for a barber shop, built with Next.
 │   │   ├── booking         # Components for the booking flow
 │   │   ├── landing         # Components for the landing page sections
 │   │   └── ui              # ShadCN UI components
-│   ├── ai                  # Genkit flows and AI logic
-│   │   └── flows           # Server-side flows (e.g., create booking)
-│   ├── lib                 # Utility functions and static data
+│   ├── lib                 # Utility functions, services, and static data
+│   │   ├── booking-service.ts    # Booking creation logic
+│   │   ├── testimonial-service.ts # Testimonial creation logic
+│   │   ├── firebase-admin.ts     # Firebase Admin SDK initialization
 │   │   ├── data.ts         # Services data and time slot logic
-│   │   ├── firebase.ts     # Firebase initialization
+│   │   ├── firebase.ts     # Client-side Firebase initialization
 │   │   └── utils.ts        # General utility functions (e.g., cn)
 │   └── types               # TypeScript type definitions
 ├── public                  # Static assets (images, fonts)
@@ -119,17 +114,17 @@ This is a modern, responsive web application for a barber shop, built with Next.
 
 ## 🧠 Key Logic Explained
 
-### Genkit Flows
+### Server-Side Services
 
-The application's backend logic is handled by Genkit flows located in `src/ai/flows`.
+The application's backend logic is handled by server-side services located in `src/lib/`.
 
--   **`create-booking-flow.ts`**:
+-   **`booking-service.ts`**:
     -   Receives booking details from the client (service ID, date, time, user info).
     -   Validates the input using a `zod` schema.
     -   Saves the new booking to the `bookings` collection in Firestore (including WhatsApp opt-in flag).
     -   Simulates sending formatted confirmation emails to both the client and the barber by logging the content to the console.
 
--   **`create-testimonial-flow.ts`**:
+-   **`testimonial-service.ts`**:
     -   Receives feedback from a client (name, quote).
     -   Validates the input using `zod`.
     -   Generates a dynamic avatar URL with the user's initial.

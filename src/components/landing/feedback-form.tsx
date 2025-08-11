@@ -43,7 +43,7 @@ export function FeedbackForm() {
       });
       form.reset();
     } catch (error) {
-      console.error("Failed to submit feedback", error);
+              // Failed to submit feedback
       toast({
         variant: "destructive",
         title: "Submission Failed",

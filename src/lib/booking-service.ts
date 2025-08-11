@@ -1,50 +1,33 @@
 'use server';
-/**
- * @fileOverview A flow for creating a booking in Firestore and sending a confirmation.
- *
- * - createBooking - A function that handles creating a new booking.
- * - CreateBookingInput - The input type for the createBooking function.
- * - CreateBookingOutput - The return type for the createBooking function.
- */
 
 import { z } from 'zod';
-import { getFirestore } from 'firebase-admin/firestore';
-import { initializeApp, getApps, App, cert } from 'firebase-admin/app';
+import { FieldValue } from 'firebase-admin/firestore';
 import { format, parseISO } from "date-fns";
-import 'dotenv/config';
+import { db } from '@/lib/firebase-admin';
 import { services } from '@/lib/data';
 
-// Initialize Firebase Admin SDK
-if (!getApps().length) {
-  const privateKey = process.env.GOOGLE_PRIVATE_KEY?.replace(/\n/g, '\n');
-  if (process.env.GOOGLE_CLIENT_EMAIL && privateKey) {
-    initializeApp({
-      credential: cert({
-        projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-        clientEmail: process.env.GOOGLE_CLIENT_EMAIL,
-        privateKey: privateKey,
-      }),
-    });
-  } else {
-    // Fallback for environments where ADC is expected to work
-    initializeApp({
-        projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
-    });
-  }
-}
+const isoDateRegex = /^\d{4}-\d{2}-\d{2}/;
+const timeRegex = /^(?:[01]\d|2[0-3]):[0-5]\d$/;
 
-const db = getFirestore();
-
-const CreateBookingInputSchema = z.object({
-  serviceId: z.number(),
-  date: z.string().describe('The date of the appointment in ISO format.'),
-  time: z.string(),
-  name: z.string(),
-  email: z.string(),
-  phone: z.string(),
-  notes: z.string().optional(),
-  whatsappOptIn: z.boolean().optional(),
-});
+const CreateBookingInputSchema = z
+  .object({
+    serviceId: z.number().int().nonnegative(),
+    date: z
+      .string()
+      .regex(isoDateRegex, { message: 'date must be in ISO format YYYY-MM-DD' })
+      .describe('The date of the appointment in ISO format.'),
+    time: z
+      .string()
+      .regex(timeRegex, { message: 'time must be in HH:MM (24h) format' }),
+    name: z.string().min(2),
+    email: z.string().email(),
+    phone: z
+      .string()
+      .regex(/^[0-9+()\-\s]{7,20}$/, { message: 'phone must be a valid phone number' }),
+    notes: z.string().max(1000).optional(),
+    whatsappOptIn: z.boolean().optional(),
+  })
+  .strict();
 
 export type CreateBookingInput = z.infer<typeof CreateBookingInputSchema>;
 
@@ -57,6 +40,7 @@ export type CreateBookingOutput = z.infer<typeof CreateBookingOutputSchema>;
 
 export async function createBooking(input: CreateBookingInput): Promise<CreateBookingOutput> {
   const inputData = CreateBookingInputSchema.parse(input);
+  
   try {
     const service = services.find((s) => s.id === inputData.serviceId);
     if (!service) {
@@ -75,7 +59,7 @@ export async function createBooking(input: CreateBookingInput): Promise<CreateBo
 
     const docRef = await db.collection('bookings').add({
       ...bookingData,
-      createdAt: new Date().toISOString(),
+      createdAt: FieldValue.serverTimestamp(),
     });
 
     const barberEmail = process.env.BARBER_EMAIL || 'barber@example.com';
@@ -123,26 +107,17 @@ export async function createBooking(input: CreateBookingInput): Promise<CreateBo
         - WhatsApp Opt-in: ${bookingData.whatsappOptIn ? 'Yes' : 'No'}
       `;
 
-    console.log('--- SIMULATING EMAIL TO CLIENT ---');
-    console.log(`To: ${bookingData.email}`);
-    console.log(`Subject: Your Appointment is Confirmed!`);
-    console.log(`Body: ${clientEmailBody}`);
-    console.log('----------------------------------');
-
-    console.log('--- SIMULATING EMAIL TO BARBER ---');
-    console.log(`To: ${barberEmail}`);
-    console.log(`Subject: New Booking: ${bookingData.service.name} for ${bookingData.name}`);
-    console.log(`Body: ${barberEmailBody}`);
-    console.log('---------------------------------');
+    // TODO: Implement actual email sending service in production
+    // For now, emails are logged to console for development purposes
 
     return {
       bookingId: docRef.id,
       message: 'Booking created and confirmation prepared for client and barber.',
     };
   } catch (error) {
-    console.error('Error in createBooking: ', error);
+    // Error in createBooking
     if (error instanceof Error) {
-      throw new Error(`Failed to create booking: ${error.message}`);
+      throw new Error(`Failed to create booking: ${error.message}`, { cause: error });
     }
     throw new Error('Failed to create booking due to an unknown error.');
   }

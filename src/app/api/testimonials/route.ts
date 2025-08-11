@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { z } from 'zod';
 import { getFirestore } from 'firebase-admin/firestore';
 import { initializeApp, getApps, cert } from 'firebase-admin/app';
 
@@ -53,6 +54,8 @@ const FALLBACK_TESTIMONIALS = [
     createdAt: new Date().toISOString(),
   },
 ];
+// Empty array for production - testimonials will be fetched from database
+const FALLBACK_TESTIMONIALS: any[] = [];
 
 // Initialize Firebase Admin with error handling
 function initializeFirebaseAdmin() {
@@ -78,7 +81,7 @@ function initializeFirebaseAdmin() {
       });
     }
   } catch (error) {
-    console.error('Failed to initialize Firebase Admin:', error);
+    // Failed to initialize Firebase Admin
     throw error;
   }
 }
@@ -102,6 +105,7 @@ export async function GET(request: Request) {
     // Check if Firebase is properly configured
     if (!isFirebaseConfigured()) {
       console.log('Firebase not configured, using fallback testimonials for development');
+      // Firebase not configured - return empty testimonials
       
       const { searchParams } = new URL(request.url);
       const limitParam = searchParams.get('limit');
@@ -124,15 +128,28 @@ export async function GET(request: Request) {
     initializeFirebaseAdmin();
 
     const { searchParams } = new URL(request.url);
-    const limitParam = searchParams.get('limit');
-    const cursor = searchParams.get('cursor');
-
-    const DEFAULT_LIMIT = 6; // Reduced for better performance
-    const MAX_LIMIT = 20;    // Reduced max limit
-    const limit = Math.min(
-      Math.max(parseInt(limitParam || `${DEFAULT_LIMIT}`, 10) || DEFAULT_LIMIT, 1),
-      MAX_LIMIT
-    );
+    const paramsSchema = z.object({
+      limit: z
+        .string()
+        .regex(/^\d+$/)
+        .transform((v) => parseInt(v, 10))
+        .refine((v) => v >= 1 && v <= 20, 'limit must be between 1 and 20')
+        .optional(),
+      cursor: z.string().min(1).optional(),
+    });
+    const parsed = paramsSchema.safeParse({
+      limit: searchParams.get('limit') ?? undefined,
+      cursor: searchParams.get('cursor') ?? undefined,
+    });
+    if (!parsed.success) {
+      return NextResponse.json(
+        { error: 'Invalid query parameters', details: parsed.error.issues },
+        { status: 400, headers }
+      );
+    }
+    const DEFAULT_LIMIT = 6;
+    const limit = parsed.data.limit ?? DEFAULT_LIMIT;
+    const cursor = parsed.data.cursor;
 
     const db = getFirestore();
     let query = db
@@ -148,7 +165,7 @@ export async function GET(request: Request) {
           query = query.startAfter(docSnap);
         }
       } catch (cursorError) {
-        console.warn('Invalid cursor provided:', cursor);
+        // Invalid cursor provided
         // Continue without cursor
       }
     }
@@ -184,7 +201,13 @@ export async function GET(request: Request) {
     });
 
   } catch (error) {
-    console.error('Error fetching testimonials:', error);
+          // Error fetching testimonials
+    
+    // Return fallback testimonials even on error
+    const { searchParams } = new URL(request.url);
+    const limitParam = searchParams.get('limit');
+    const limit = Math.min(parseInt(limitParam || '6', 10) || 6, 20);
+    const testimonials = FALLBACK_TESTIMONIALS.slice(0, limit);
     
     // Return fallback testimonials even on error
     const { searchParams } = new URL(request.url);

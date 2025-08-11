@@ -12,7 +12,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "
 import { Checkbox } from "@/components/ui/checkbox";
 
 type Props = {
-  onSubmit: (details: { name: string; email: string; phone: string; notes: string; whatsappOptIn?: boolean }) => void;
+  onSubmit: (details: { name: string; email: string; phone: string; notes?: string; whatsappOptIn?: boolean }) => void;
   onBack: () => void;
 };
 
