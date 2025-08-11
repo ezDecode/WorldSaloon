@@ -23,9 +23,9 @@ export async function createTestimonial(input: CreateTestimonialInput): Promise<
       createdAt: FieldValue.serverTimestamp(),
       avatarUrl: `https://placehold.co/100x100/F5F5DC/333333.png?text=${firstInitial}`,
     });
-    console.log('Testimonial created successfully');
+    // Testimonial created successfully
   } catch (error) {
-    console.error('Error in createTestimonial: ', error);
+    // Error in createTestimonial
     if (error instanceof Error) {
       throw new Error(`Failed to create testimonial: ${error.message}`, { cause: error });
     }

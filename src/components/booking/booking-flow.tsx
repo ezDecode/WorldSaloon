@@ -76,10 +76,10 @@ export function BookingFlow() {
       if (!res.ok) throw new Error('Failed to create booking');
 
       const result = await res.json();
-      console.log('Booking confirmed:', result);
+              // Booking confirmed successfully
       setStep(5);
     } catch (error) {
-       console.error("Booking failed", error);
+               // Booking failed
        toast({
          variant: "destructive",
          title: "Booking Failed",

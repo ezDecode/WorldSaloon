@@ -20,7 +20,7 @@ export function Testimonials() {
         const data = await res.json();
         setTestimonials((data.testimonials || []) as Testimonial[]);
       } catch (error) {
-        console.error("Error fetching testimonials: ", error);
+        // Error fetching testimonials
       } finally {
         setLoading(false);
       }
